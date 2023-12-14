@@ -16,8 +16,11 @@ COPY . .
 # Build the React app
 RUN npm run build
 
-# Expose port 8080 for the application
-EXPOSE 8080
+# Copy serve configuration into the dist directory
+COPY serve.json ./dist/serve.json
 
-# Use the serve module to serve the React app
-CMD ["npx", "serve", "-s", "build", "-l", "8080"]
+# Expose port 3000 for the application
+EXPOSE 3000
+
+# Use the serve module to serve the React app, explicitly specifying the serve.json configuration
+CMD ["npx", "serve", "-s", "dist", "-l", "3000", "--config", "/usr/src/app/dist/serve.json"]
