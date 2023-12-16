@@ -9,7 +9,6 @@ const TeamProjectCard = () => {
       </div>
       <div className="grid grid-cols-2 auto-rows-auto">
         <TeamCard teamId={1} />
-        <TeamCard teamId={5} />
       </div>
     </>
   );

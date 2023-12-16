@@ -29,21 +29,6 @@ const ProjectBox = () => {
       </div>
       <div className="grid grid-cols-2 grid-rows-auto gap-3 mt-3 md:grid-cols-4 pb-4">
         <Project projectId={1} />
-        <Project projectId={2} />
-        <Project projectId={3} />
-        <Project projectId={1} />
-        <Project projectId={2} />
-        <Project projectId={3} />
-        <Project projectId={1} />
-        <Project projectId={2} />
-        <Project projectId={3} />
-        <Project projectId={1} />
-        <Project projectId={2} />
-        <Project projectId={3} />
-        <Project projectId={1} />
-        <Project projectId={2} />
-        <Project projectId={3} />
-        <Project projectId={4} />
       </div>
       <Modal isVisible={showModal} setIsVisible={setShowModal}>
         <CreateProjectForm setShowModal={setShowModal} />

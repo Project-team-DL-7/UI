@@ -1,9 +1,13 @@
 import React from "react";
 import Navigation from "./Navigation";
 
-const Sidebar = () => {
+const Sidebar = ({ showMenu }) => {
   return (
-    <div className="hidden row-span-5 col-span-1 border-r-[1px] border-gray-300 shadow-xl shadow-gray-400 lg:block ">
+    <div
+      className={`${
+        (showMenu && "hidden") || "block"
+      } lg:block row-span-2 col-span-4 md:row-span-3 border-r-[1px] border-gray-300 shadow-xl shadow-gray-400 lg:row-span-5 lg:col-span-1`}
+    >
       <Navigation />
     </div>
   );

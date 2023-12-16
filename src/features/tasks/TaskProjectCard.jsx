@@ -16,7 +16,6 @@ const TaskProjectCard = () => {
             </tr>
           </thead>
           <tbody>
-            <TaskPreview taskId={1} />
             <TaskPreview taskId={2} />
           </tbody>
         </table>

@@ -9,6 +9,9 @@ import ProjectDetail from "./features/project/ProjectDetail";
 import TeamDetails from "./features/teams/TeamDetails";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
+import TaskDetail from "./features/tasks/TaskDetail";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
 // import Login from "./pages/Login";
 
 const queryClient = new QueryClient();
@@ -25,7 +28,10 @@ const App = () => {
             <Route path="/tasks" element={<Tasks />} />
             <Route path="/projects/:id" element={<ProjectDetail />} />
             <Route path="/teams/:id" element={<TeamDetails />} />
+            <Route path="/tasks/:id" element={<TaskDetail />} />
           </Route>
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
         </Routes>
       </BrowserRouter>
       <ReactQueryDevtools initialIsOpen={false} />

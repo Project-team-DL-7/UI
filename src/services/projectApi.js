@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:2000";
+const API_URL = "http://localhost:8000";
 
 export async function getProject(id) {
   const res = await fetch(`${API_URL}/project/${id}`);

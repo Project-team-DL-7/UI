@@ -1,65 +1,59 @@
-import React, { useState } from "react";
+import React from "react";
 import Box from "../ui/Box";
-import { useQuery } from "react-query";
-import { getProject } from "../services/projectApi";
-import Project from "../features/project/Project";
-import Button from "../ui/Button";
+import DashBoardProject from "../features/project/DashBoardProject";
+import DashBoardTeam from "../features/teams/DashBoardTeam";
+import DashBoardTask from "../features/tasks/DashBoardTask";
 
 const Dashboard = () => {
-  const [projectId, setProjectId] = useState("");
-  const { data, isLoading, isError, refetch } = useQuery(
-    ["project", projectId],
-    () => getProject(projectId),
-    {
-      enabled: false,
-    }
-  );
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (projectId.trim() !== "") {
-      refetch();
-    }
-  };
-
-  if (isLoading) {
-    return (
-      <Box>
-        <p className="flex flex-col h-full items-center justify-center text-3xl font-bold">
-          Loading...
-        </p>
-      </Box>
-    );
-  }
-
-  if (isError) {
-    return (
-      <Box>
-        <div className="flex flex-col h-full items-center justify-center ">
-          <p className="text-3xl font-bold">Error fetching project</p>
-          <button onClick={() => setProjectId("")}>&larr; Go back</button>
-        </div>
-      </Box>
-    );
-  }
-
   return (
     <Box>
-      <div className="flex flex-col items-center h-full justify-center gap-5">
-        <form onSubmit={handleSubmit} className="flex gap-4 ">
-          <input
-            type="text"
-            placeholder="Enter Project ID"
-            value={projectId}
-            onChange={(e) => setProjectId(e.target.value)}
-            className="bg-blue-200 rounded-md text-center"
-          />
-        </form>
-        {data ? (
-          <Project projectId={projectId} />
-        ) : (
-          <p>Please enter a valid project ID</p>
-        )}
+      <div className="grid grid-cols-2 auto-rows-auto">
+        <div className="col-span-2 flex justify-center p-4 text-4xl font-bold text-blue-800">
+          <h1>Dashboard</h1>
+        </div>
+        <div className="mx-2 py-2 border-2 border-gray-500 rounded-md p-2 min-h-[12rem]">
+          <h1 className="flex justify-center text-blue-800 font-bold text-xl">
+            Tasks
+          </h1>
+
+          {/* Tasks */}
+          <div className="grid grid-cols-1 md:grid-cols-2 justify-items-center gap-4 max-h-[12rem] overflow-y-auto">
+            <DashBoardTask taskId={11} />
+            <DashBoardTask taskId={11} />
+            <DashBoardTask taskId={11} />
+            <DashBoardTask taskId={11} />
+            <DashBoardTask taskId={11} />
+          </div>
+        </div>
+        <div className="mx-2 py-2 border-2 border-gray-500 rounded-md p-2">
+          <h1 className="flex justify-center text-blue-800 font-bold text-xl">
+            Teams
+          </h1>
+
+          {/*  Teams */}
+          <div className="grid grid-cols-1 md:grid-cols-2 justify-items-center gap-4 max-h-[12rem] overflow-y-auto">
+            <DashBoardTeam teamId={1} />
+            <DashBoardTeam teamId={1} />
+            <DashBoardTeam teamId={1} />
+          </div>
+        </div>
+        <div className="col-span-2 mx-2 mt-4 mb-2 py-2 border-2 border-gray-500 rounded-md p-2 min-h-[25rem] md:min-h-[18rem]">
+          <h1 className="flex justify-center text-blue-800 font-bold text-xl mb-2">
+            Projects
+          </h1>
+
+          {/* projects */}
+          <div className="flex gap-12 flex-wrap justify-center">
+            <DashBoardProject projectId={1} />
+            <DashBoardProject projectId={1} />
+            <DashBoardProject projectId={1} />
+            <DashBoardProject projectId={1} />
+            <DashBoardProject projectId={1} />
+            <DashBoardProject projectId={1} />
+            <DashBoardProject projectId={1} />
+            <DashBoardProject projectId={1} />
+          </div>
+        </div>
       </div>
     </Box>
   );

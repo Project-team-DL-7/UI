@@ -1,39 +1,14 @@
-const API_URL = "http://localhost:2000";
+import axios from "axios";
+const API_URL = "http://localhost:8000";
 
-export async function getTask(id) {
-  const res = await fetch(`${API_URL}/task/${id}`);
-  if (!res.ok) throw Error(`Couldn't find task #${id}`);
-
-  const task = await res.json();
-  return task;
+export function getTask(id) {
+  return axios.get(`${API_URL}/task/${id}`).then((res) => res.data);
 }
 
-export async function createTask(newTask) {
-  try {
-    const res = await fetch(`${API_URL}/task`, {
-      method: "POST",
-      body: JSON.stringify(newTask),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-
-    if (!res.ok) throw Error();
-    const task = await res.json();
-    return task;
-  } catch {
-    throw Error("Failed creating your task");
-  }
+export function createTask(task) {
+  return axios.post(`${API_URL}/task`, task).then((res) => res.data);
 }
 
-export async function deleteTask(id) {
-  const res = await fetch(`${API_URL}/task/${id}`, {
-    method: "DELETE",
-  });
-
-  if (!res.ok) {
-    throw Error(`Couldn't delete task #${id}`);
-  }
-
-  return { success: true, message: `Task #${id} deleted successfully` };
+export function deleteTask(id) {
+  return axios.delete(`${API_URL}/task/${id}`).then((res) => res.data);
 }

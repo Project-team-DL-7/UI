@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Box from "../../ui/Box";
 import TeamMember from "./TeamMember";
 import { useParams } from "react-router-dom";
@@ -32,20 +32,6 @@ const TeamDetails = () => {
         </div>
       </div>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-2 mt-5 ml-2 ">
-        <TeamMember />
-        <TeamMember />
-        <TeamMember />
-        <TeamMember />
-        <TeamMember />
-        <TeamMember />
-        <TeamMember />
-        <TeamMember />
-        <TeamMember />
-        <TeamMember />
-        <TeamMember />
-        <TeamMember />
-        <TeamMember />
-        <TeamMember />
         <TeamMember />
         <TeamMember />
         <TeamMember />
