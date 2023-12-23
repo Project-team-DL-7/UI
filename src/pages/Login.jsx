@@ -30,6 +30,27 @@ const Login = () => {
         <button type="submit" className="bg-blue-600 hover:bg-blue-500">
           Log In
         </button>
+        {/* TODO: fix this */}
+        <p>OR</p>
+        <div>
+          <a
+            class="button google"
+            href="http://localhost:8000/login/federated/google"
+          >
+            Sign in with Google
+          </a>
+        </div>
+        <div>
+          <a
+            class="button facebook"
+            href="http://localhost:8000/login/federated/facebook"
+          >
+            Sign in with Facebook
+          </a>
+        </div>
+        <form action="/logout" method="post">
+          <button type="submit">Logout</button>
+        </form>
         <h1>
           Don't have an account ?
           <Link to={"/register"} className="ml-1">
