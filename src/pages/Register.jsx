@@ -4,20 +4,30 @@ import { Link } from "react-router-dom";
 const Register = () => {
   return (
     <div className="w-screen h-screen items-center flex justify-center">
-      <form className="flex flex-col items-center gap-5 w-[24rem] h-[18rem] border-blue-400 border-2 rounded-lg">
+      <form action="http://localhost:8000/signup" method="post" className="flex flex-col items-center gap-5 w-[24rem] h-[18rem] border-blue-400 border-2 rounded-lg">
         <h1 className="p-2 text-xl font-bold">Register</h1>
         <input
           type="text"
+          name="username"
+          autoComplete="username"
+          autoFocus
+          required
           placeholder="Username"
           className="bg-blue-200 text-center rounded-md"
         />
         <input
-          type="text"
+          type="email"
+          name="email"
+          autoComplete="email"
+          required
           placeholder="Email"
           className="bg-blue-200 text-center rounded-md"
         />
         <input
           type="password"
+          name="password"
+          autoComplete="new-password"
+          required
           placeholder="Password"
           className="bg-blue-200 text-center rounded-md"
         />
