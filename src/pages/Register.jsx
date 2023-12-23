@@ -1,10 +1,24 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useContext, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { MeContext } from "../contexts/MeContext";
 
 const Register = () => {
+  const navigate = useNavigate();
+  const me = useContext(MeContext);
+
+  useEffect(() => {
+    if (me.isLoggedIn) {
+      navigate("/");
+    }
+  }, [me.isLoggedIn]);
+
   return (
-    <div className="w-screen h-screen items-center flex justify-center">
-      <form action="http://localhost:8000/signup" method="post" className="flex flex-col items-center gap-5 w-[24rem] h-[18rem] border-blue-400 border-2 rounded-lg">
+    <div className="w-screen h-screen items-center flex justify-center flex-col">
+      <form
+        action="http://localhost:8000/signup"
+        method="post"
+        className="flex flex-col items-center gap-5 w-[24rem] h-[18rem] border-blue-400 border-2 rounded-lg"
+      >
         <h1 className="p-2 text-xl font-bold">Register</h1>
         <input
           type="text"
@@ -41,6 +55,24 @@ const Register = () => {
           </Link>
         </h1>
       </form>
+      {/* TODO: fix this */}
+      <div className="flex flex-col items-center gap-2 mt-5">
+        <div>
+          <a href="http://localhost:8000/login/federated/google">
+            <button>Sign in with Google</button>
+          </a>
+        </div>
+        <div>
+          <a href="http://localhost:8000/login/federated/facebook">
+            <button>Sign in with Facebook</button>
+          </a>
+        </div>
+        <form action="http://localhost:8000/logout" method="post">
+          <button type="submit" className="bg-blue-600 hover:bg-blue-500">
+            Logout
+          </button>
+        </form>
+      </div>
     </div>
   );
 };

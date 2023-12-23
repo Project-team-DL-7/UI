@@ -1,9 +1,19 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useContext, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { MeContext } from "../contexts/MeContext";
 
 const Login = () => {
+  const navigate = useNavigate();
+  const me = useContext(MeContext);
+
+  useEffect(() => {
+    if (me.isLoggedIn) {
+      navigate("/");
+    }
+  }, [me.isLoggedIn]);
+
   return (
-    <div className="w-screen h-screen items-center flex justify-center">
+    <div className="w-screen h-screen items-center flex justify-center flex-col">
       <form
         action="http://localhost:8000/login/password"
         method="post"
@@ -30,27 +40,6 @@ const Login = () => {
         <button type="submit" className="bg-blue-600 hover:bg-blue-500">
           Log In
         </button>
-        {/* TODO: fix this */}
-        <p>OR</p>
-        <div>
-          <a
-            class="button google"
-            href="http://localhost:8000/login/federated/google"
-          >
-            Sign in with Google
-          </a>
-        </div>
-        <div>
-          <a
-            class="button facebook"
-            href="http://localhost:8000/login/federated/facebook"
-          >
-            Sign in with Facebook
-          </a>
-        </div>
-        <form action="http://localhost:8000/logout" method="post">
-          <button type="submit">Logout</button>
-        </form>
         <h1>
           Don't have an account ?
           <Link to={"/register"} className="ml-1">
@@ -58,6 +47,18 @@ const Login = () => {
           </Link>
         </h1>
       </form>
+      <div className="flex flex-col items-center gap-2 mt-5">
+        <div>
+          <a href="http://localhost:8000/login/federated/google">
+            <button>Sign in with Google</button>
+          </a>
+        </div>
+        <div>
+          <a href="http://localhost:8000/login/federated/facebook">
+            <button>Sign in with Facebook</button>
+          </a>
+        </div>
+      </div>
     </div>
   );
 };
