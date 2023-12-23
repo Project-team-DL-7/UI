@@ -48,7 +48,7 @@ const Login = () => {
             Sign in with Facebook
           </a>
         </div>
-        <form action="/logout" method="post">
+        <form action="http://localhost:8000/logout" method="post">
           <button type="submit">Logout</button>
         </form>
         <h1>
