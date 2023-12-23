@@ -13,7 +13,6 @@ import TaskDetail from "./features/tasks/TaskDetail";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import { AuthProvider } from "./AuthProvider";
-// import Login from "./pages/Login";
 
 const queryClient = new QueryClient();
 
