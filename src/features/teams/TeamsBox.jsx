@@ -28,7 +28,7 @@ const TeamsBox = () => {
         />
       </div>
       <div className="grid grid-cols-2 grid-rows-auto gap-3 mt-3 md:grid-cols-4 pb-4">
-        <Team teamId={1} />
+        <Team teamId={7} />
       </div>
       <Modal isVisible={showModal} setIsVisible={setShowModal}>
         <CreateTeamForm setShowModal={setShowModal} />

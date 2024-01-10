@@ -4,6 +4,7 @@ export async function getMe() {
   const res = await fetch(`${API_URL}/me`, {
     credentials: "include",
   });
+  console.log(res);
   if (!res.ok) {
     return null;
   }

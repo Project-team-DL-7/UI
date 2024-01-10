@@ -4,12 +4,13 @@ import { useNavigate } from "react-router-dom";
 import { HiOutlineArchiveBoxXMark } from "react-icons/hi2";
 import { useMutation } from "react-query";
 
-const ProjectDelete = ({ id }) => {
+const ProjectDelete = ({ id, refetch }) => {
   const navigate = useNavigate();
 
   const { mutate } = useMutation(() => deleteProject(id), {
     onSuccess: () => {
       navigate("/projects");
+      refetch();
     },
   });
 

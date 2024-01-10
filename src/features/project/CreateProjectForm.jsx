@@ -3,7 +3,7 @@ import Button from "../../ui/Button";
 import { createProject } from "../../services/projectApi";
 import { useMutation } from "react-query";
 
-const CreateProjectForm = ({ setShowModal }) => {
+const CreateProjectForm = ({ setShowModal, refetch }) => {
   const [description, setDescription] = useState("");
 
   const { mutate: createProjectMutation } = useMutation(
@@ -12,6 +12,7 @@ const CreateProjectForm = ({ setShowModal }) => {
       onSuccess: (newProject) => {
         console.log("New project created:", newProject);
         setShowModal(false);
+        refetch();
       },
       onError: (error) => {
         console.error("Failed to create project:", error.message);

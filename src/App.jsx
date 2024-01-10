@@ -13,6 +13,7 @@ import TaskDetail from "./features/tasks/TaskDetail";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import { AuthProvider } from "./AuthProvider";
+import { ProjectContextProvider } from "./contexts/ProjectContext";
 
 const queryClient = new QueryClient();
 
@@ -21,19 +22,21 @@ const App = () => {
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
         <AuthProvider>
-          <Routes>
-            <Route element={<Layout />}>
-              <Route path="/" element={<Dashboard />} />
-              <Route path="/projects" element={<Projects />} />
-              <Route path="/teams" element={<Teams />} />
-              <Route path="/tasks" element={<Tasks />} />
-              <Route path="/projects/:id" element={<ProjectDetail />} />
-              <Route path="/teams/:id" element={<TeamDetails />} />
-              <Route path="/tasks/:id" element={<TaskDetail />} />
-            </Route>
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-          </Routes>
+          <ProjectContextProvider>
+            <Routes>
+              <Route element={<Layout />}>
+                <Route path="/" element={<Dashboard />} />
+                <Route path="/projects" element={<Projects />} />
+                <Route path="/teams" element={<Teams />} />
+                <Route path="/tasks" element={<Tasks />} />
+                <Route path="/projects/:id" element={<ProjectDetail />} />
+                <Route path="/teams/:id" element={<TeamDetails />} />
+                <Route path="/tasks/:id" element={<TaskDetail />} />
+              </Route>
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+            </Routes>
+          </ProjectContextProvider>
         </AuthProvider>
       </BrowserRouter>
       <ReactQueryDevtools initialIsOpen={false} />

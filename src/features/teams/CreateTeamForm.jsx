@@ -16,7 +16,6 @@ const CreateTeam = ({ setShowModal }) => {
       },
       onError: (error) => {
         console.error("Failed creating team:", error);
-        // show error message to user
       },
     }
   );
