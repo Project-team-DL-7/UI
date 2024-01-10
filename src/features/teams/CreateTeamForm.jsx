@@ -3,7 +3,7 @@ import Button from "../../ui/Button";
 import { createTeam } from "../../services/teamApi";
 import { useMutation } from "react-query";
 
-const CreateTeam = ({ setShowModal }) => {
+const CreateTeam = ({ setShowModal, refetch }) => {
   const [teamName, setTeamName] = useState("");
   const [description, setDescription] = useState("");
 
@@ -13,6 +13,7 @@ const CreateTeam = ({ setShowModal }) => {
       onSuccess: (createdTeam) => {
         console.log("Team created:", createdTeam);
         setShowModal(false);
+        refetch();
       },
       onError: (error) => {
         console.error("Failed creating team:", error);

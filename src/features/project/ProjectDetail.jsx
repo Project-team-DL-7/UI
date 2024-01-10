@@ -8,12 +8,12 @@ import { ProjectContext } from "../../contexts/ProjectContext";
 
 const ProjectDetail = () => {
   const { id } = useParams();
-  const { projects, refetch } = useContext(ProjectContext);
+  const { projects, refetchProjects } = useContext(ProjectContext);
 
   return (
     <Box>
       <div className="flex justify-end p-3">
-        <ProjectDelete id={id} refetch={refetch} />
+        <ProjectDelete id={id} refetch={refetchProjects} />
       </div>
       <div className="flex flex-col items-center">
         <h1 className="text-3xl font-bold  text-blue-800 self-start ml-[10%]">

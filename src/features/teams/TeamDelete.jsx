@@ -4,12 +4,13 @@ import { useNavigate } from "react-router-dom";
 import { HiOutlineArchiveBoxXMark } from "react-icons/hi2";
 import { useMutation } from "react-query";
 
-const TeamDelete = ({ id }) => {
+const TeamDelete = ({ id, refetch }) => {
   const navigate = useNavigate();
 
   const { mutate: deleteTeamMutation } = useMutation(() => deleteTeam(id), {
     onSuccess: () => {
       navigate("/teams");
+      refetch();
     },
   });
 

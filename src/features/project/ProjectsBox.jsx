@@ -7,7 +7,7 @@ import { ProjectContext } from "../../contexts/ProjectContext";
 
 const ProjectBox = () => {
   const [showModal, setShowModal] = useState(false);
-  const { projects, refetch } = useContext(ProjectContext);
+  const { projects, refetchProjects } = useContext(ProjectContext);
   const [search, setSearch] = useState("");
 
   const filteredProjects = projects.filter((project) => {
@@ -49,7 +49,10 @@ const ProjectBox = () => {
         ))}
       </div>
       <Modal isVisible={showModal} setIsVisible={setShowModal}>
-        <CreateProjectForm setShowModal={setShowModal} refetch={refetch} />
+        <CreateProjectForm
+          setShowModal={setShowModal}
+          refetch={refetchProjects}
+        />
       </Modal>
     </div>
   );
