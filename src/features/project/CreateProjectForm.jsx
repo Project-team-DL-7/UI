@@ -2,21 +2,23 @@ import React, { useState } from "react";
 import Button from "../../ui/Button";
 import { createProject } from "../../services/projectApi";
 import { useMutation } from "react-query";
+import { useToast } from "../../contexts/ToastContext";
 
 const CreateProjectForm = ({ setShowModal, refetch }) => {
   const [description, setDescription] = useState("");
   const [name, setName] = useState("");
+  const { showToast } = useToast();
 
   const { mutate: createProjectMutation } = useMutation(
     (newProject) => createProject(newProject),
     {
       onSuccess: (newProject) => {
-        console.log("New project created:", newProject);
+        showToast("Project created successfully", "success");
         setShowModal(false);
         refetch();
       },
       onError: (error) => {
-        console.error("Failed to create project:", error.message);
+        showToast("Failed creating project:", "error");
         setShowModal(false);
       },
     }

@@ -2,21 +2,24 @@ import React, { useState } from "react";
 import Button from "../../ui/Button";
 import { createTeam } from "../../services/teamApi";
 import { useMutation } from "react-query";
+import { useToast } from "../../contexts/ToastContext";
 
 const CreateTeam = ({ setShowModal, refetch }) => {
   const [teamName, setTeamName] = useState("");
   const [description, setDescription] = useState("");
+  const { showToast } = useToast();
 
   const { mutate: createTeamMutation } = useMutation(
     (newTeam) => createTeam(newTeam),
     {
       onSuccess: (createdTeam) => {
-        console.log("Team created:", createdTeam);
         setShowModal(false);
+        showToast("Team created successfully", "success");
         refetch();
       },
       onError: (error) => {
-        console.error("Failed creating team:", error);
+        showToast("Failed creating team:", "error");
+        setShowModal(false);
       },
     }
   );

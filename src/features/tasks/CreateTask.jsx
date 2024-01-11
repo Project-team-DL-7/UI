@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Button from "../../ui/Button";
 import { useMutation } from "react-query";
 import { createTask } from "../../services/taskApi";
+import { useToast } from "../../contexts/ToastContext";
 
 const CreateTask = ({ projectId }) => {
   const [taskName, setTaskName] = useState("");
@@ -9,13 +10,14 @@ const CreateTask = ({ projectId }) => {
   const [deadline, setDeadline] = useState("");
   const [parentTaskId, setParentTaskId] = useState("");
   const [teamId, setTeamId] = useState("");
+  const { showToast } = useToast();
 
   const mutation = useMutation(createTask, {
     onSuccess: (data) => {
-      console.log(data);
+      showToast("Task created successfully", "success");
     },
     onError: (error) => {
-      console.error("Failed to create task", error);
+      showToast(`Error: ${error.message}`, "error");
     },
   });
 
