@@ -7,6 +7,7 @@ import { useToast } from "../../contexts/ToastContext";
 const CreateProjectForm = ({ setShowModal, refetch }) => {
   const [description, setDescription] = useState("");
   const [name, setName] = useState("");
+  const [teamId, setTeamId] = useState("");
   const { showToast } = useToast();
 
   const { mutate: createProjectMutation } = useMutation(
@@ -32,10 +33,15 @@ const CreateProjectForm = ({ setShowModal, refetch }) => {
     setName(event.target.value);
   };
 
+  const handleTeamIdChange = (event) => {
+    setTeamId(event.target.value);
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    createProjectMutation({ description, name });
+    createProjectMutation({ description, name, id_team: teamId });
   };
+
   return (
     <form
       className="flex flex-col gap-6 items-center py-12"
@@ -44,6 +50,13 @@ const CreateProjectForm = ({ setShowModal, refetch }) => {
       <h1 className="text-3xl mt-5 font-bold shadow-md shadow-gray-100">
         Create New Project
       </h1>
+      <input
+        type="number"
+        placeholder="Team ID"
+        className="bg-blue-200 rounded-md text-center inline-block w-full py-3 px-4"
+        value={teamId}
+        onChange={handleTeamIdChange}
+      />
       <textarea
         type="text"
         placeholder="Description"
