@@ -8,7 +8,9 @@ export async function createTeam(newTeam) {
       headers: {
         "Content-Type": "application/json",
       },
+      credentials: 'include', // Include credentials for session cookie
     });
+
 
     if (!res.ok) throw Error();
     const team = await res.json();
@@ -28,4 +30,27 @@ export async function deleteTeam(id) {
   }
 
   return { success: true, message: `Team #${id} deleted successfully` };
+}
+
+export async function updateTeam(updatedTeam) {
+  try {
+    const res = await fetch(`${API_URL}/team`, {
+      method: "PUT",
+      body: JSON.stringify({
+        id_team: Number(updatedTeam.id_team), // Convert id_team to a number
+        description: updatedTeam.description,
+        team_name: updatedTeam.team_name
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: 'include',
+    });
+
+    if (!res.ok) throw Error();
+    const team = await res.json();
+    return team;
+  } catch {
+    throw Error("Failed updating your team");
+  }
 }

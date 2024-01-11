@@ -4,6 +4,7 @@ import Task from "./Task";
 import CreateTask from "./CreateTask";
 import Loading from "../../ui/Loading";
 import { ProjectContext } from "../../contexts/ProjectContext";
+import Button from "../../ui/Button";
 
 const TasksBox = () => {
   const [showModal, setShowModal] = useState(false);
@@ -20,8 +21,11 @@ const TasksBox = () => {
   return (
     <div className="h-full p-4 ">
       <h1 className="flex w-full justify-center text-3xl font-bold text-blue-800">
-        Tasks
+        My Tasks
       </h1>
+      <div className="flex justify-end"> {/* Add this div */}
+        <Button text="Create Task" onClick={handleModal} /> {/* Remove the self-center class */}
+      </div>
       <div className="grid grid-cols-1 auto-rows-auto mt-5">
         {teamsIds.map((id) => {
           const tasksForTeams = tasks.filter((task) => task.id_project === id);

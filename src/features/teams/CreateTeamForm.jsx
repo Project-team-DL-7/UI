@@ -11,7 +11,7 @@ const CreateTeam = ({ setShowModal, refetch }) => {
     (newTeam) => createTeam(newTeam),
     {
       onSuccess: (createdTeam) => {
-        console.log("Team created:", createdTeam);
+        console.log("Team created:", createdTeam);   
         setShowModal(false);
         refetch();
       },

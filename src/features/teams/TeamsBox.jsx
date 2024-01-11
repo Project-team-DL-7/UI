@@ -8,13 +8,13 @@ import Loading from "../../ui/Loading";
 
 const TeamsBox = () => {
   const [showModal, setShowModal] = useState(false);
-  const { teams, refetchTeams, isTeamLoading } = useContext(ProjectContext);
+  const { teams, refetchTeam, isTeamLoading } = useContext(ProjectContext);
   const [search, setSearch] = useState("");
 
   if (isTeamLoading) return <Loading />;
 
   const filteredTeams = teams.filter((team) => {
-    return team.team_name.includes(search);
+    return team.team_name && team.team_name.toLowerCase().includes(search.toLowerCase());
   });
 
   return (
@@ -34,7 +34,7 @@ const TeamsBox = () => {
           onChange={(e) => setSearch(e.target.value)}
         />
         <h1 className="hidden text-3xl font-bold md:block text-blue-800">
-          Teams
+          My Teams
         </h1>
         <Button
           text={"Add Team"}
@@ -48,7 +48,7 @@ const TeamsBox = () => {
         ))}
       </div>
       <Modal isVisible={showModal} setIsVisible={setShowModal}>
-        <CreateTeamForm setShowModal={setShowModal} refetch={refetchTeams} />
+      <CreateTeamForm setShowModal={setShowModal} refetch={refetchTeam} />
       </Modal>
     </div>
   );

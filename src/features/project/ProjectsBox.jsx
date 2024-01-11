@@ -15,7 +15,7 @@ const ProjectBox = () => {
   }
 
   const filteredProjects = projects.filter((project) => {
-    return project.id_project.toString().includes(search);
+    return project.name && project.name.toLowerCase().includes(search.toLowerCase());
   });
 
   return (
@@ -35,7 +35,7 @@ const ProjectBox = () => {
           onChange={(e) => setSearch(e.target.value)}
         />
         <h1 className="hidden text-3xl font-bold md:block text-blue-800">
-          Projects
+          My Projects
         </h1>
         <Button
           text={"Add Project"}
@@ -47,6 +47,7 @@ const ProjectBox = () => {
         {filteredProjects.map((project) => (
           <Project
             projectId={project.id_project}
+            projectName={project.name} // pass the project name here
             data={project}
             key={project.id_project}
           />

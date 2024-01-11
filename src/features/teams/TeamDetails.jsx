@@ -3,14 +3,13 @@ import Box from "../../ui/Box";
 import TeamMember from "./TeamMember";
 import { useParams } from "react-router-dom";
 import TeamDelete from "./TeamDelete";
+import TeamUpdate from "./TeamUpdate"; // Import the TeamUpdate component
 import { ProjectContext } from "../../contexts/ProjectContext";
 import Loading from "../../ui/Loading";
 
 const TeamDetails = () => {
   const { id } = useParams();
-  const { teams, refetchTeams, isTeamLoading } = useContext(ProjectContext);
-  console.log(id);
-  console.log(teams);
+  const { teams, refetchTeam, isTeamLoading } = useContext(ProjectContext);
 
   if (isTeamLoading) return <Loading />;
 
@@ -23,7 +22,10 @@ const TeamDetails = () => {
           <h1 className="p-3 text-3xl font-bold text-blue-800">
             {team ? team.team_name : ""}
           </h1>
-          <TeamDelete id={id} refetch={refetchTeams} />
+          <div className="flex">
+            <TeamUpdate id={id} refetch={refetchTeam} originalName={team ? team.team_name : ""} originalDescription={team ? team.description : ""} /> {/* Add the TeamUpdate component here */}
+            <TeamDelete id={id} refetch={refetchTeam} />
+          </div>
         </div>
       </div>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-2 mt-5 ml-2 ">
