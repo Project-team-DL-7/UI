@@ -21,9 +21,12 @@ const CreateTeam = ({ setShowModal, refetch }) => {
     }
   );
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    createTeamMutation({ team_name: teamName, description: description });
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    createTeamMutation({
+      team_name: teamName,
+      description: description,
+    });
   };
 
   return (

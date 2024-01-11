@@ -8,7 +8,7 @@ import Loading from "../../ui/Loading";
 
 const TeamsBox = () => {
   const [showModal, setShowModal] = useState(false);
-  const { teams, refetchTeams, isTeamLoading } = useContext(ProjectContext);
+  const { teams, refetchTeam, isTeamLoading } = useContext(ProjectContext);
   const [search, setSearch] = useState("");
 
   if (isTeamLoading) return <Loading />;
@@ -48,7 +48,7 @@ const TeamsBox = () => {
         ))}
       </div>
       <Modal isVisible={showModal} setIsVisible={setShowModal}>
-        <CreateTeamForm setShowModal={setShowModal} refetch={refetchTeams} />
+        <CreateTeamForm setShowModal={setShowModal} refetch={refetchTeam} />
       </Modal>
     </div>
   );

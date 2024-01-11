@@ -8,6 +8,7 @@ export async function createProject(newProject) {
       headers: {
         "Content-Type": "application/json",
       },
+      credentials: "include",
     });
 
     if (!res.ok) throw Error();
