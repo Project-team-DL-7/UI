@@ -15,8 +15,7 @@ const TasksBox = () => {
 
   if (isTaskLoading) return <Loading />;
 
-  console.log(tasks);
-  const teamsIds = [...new Set(tasks.map((task) => task.id_team))];
+  const teamsIds = [...new Set(tasks.map((task) => task.id_project))];
 
   return (
     <div className="h-full p-4 ">
@@ -25,7 +24,7 @@ const TasksBox = () => {
       </h1>
       <div className="grid grid-cols-1 auto-rows-auto mt-5">
         {teamsIds.map((id) => {
-          const tasksForTeams = tasks.filter((task) => task.id_team === id);
+          const tasksForTeams = tasks.filter((task) => task.id_project === id);
           return (
             <Task
               showModal={handleModal}
