@@ -11,14 +11,13 @@ const TaskDelete = ({ taskId, size, refetch }) => {
 
   const mutation = useMutation(() => deleteTask(taskId), {
     onSuccess: () => {
-      console.log("Task deleted successfully!");
-
-      queryClient.invalidateQueries("task", taskId);
+      showToast("Task deleted successfully", "success");
       refetch();
       setModalIsOpen(false);
     },
+
     onError: (error) => {
-      console.error("Error deleting task:", error);
+      showToast(`Error: ${error.message}`, "error");
     },
   });
 

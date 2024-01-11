@@ -54,6 +54,7 @@ const TeamDelete = ({ id, refetch }) => {
         }}
       >
         <div>
+          <h2>Confirm Deletion</h2>
           <p>Deleting a team will delete all its projects and tasks. Are you sure you want to delete this team?</p>
         </div>
         <div>

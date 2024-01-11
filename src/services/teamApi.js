@@ -8,7 +8,7 @@ export async function createTeam(newTeam) {
       headers: {
         "Content-Type": "application/json",
       },
-      credentials: 'include', // Include credentials for session cookie
+      credentials: "include",
     });
 
 

@@ -51,7 +51,7 @@ const CreateProjectForm = ({ setShowModal, refetch }) => {
   };
 
   if (teams.length === 0) {
-    return <div>Loading teams or no teams available...</div>;
+    return <div>Loading teams or no teams available, you need to be in Team in order to create Project</div>;
   }
 
   return (

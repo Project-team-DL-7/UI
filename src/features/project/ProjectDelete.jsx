@@ -54,6 +54,7 @@ const ProjectDelete = ({ id, refetch }) => {
         }}
       >
         <div>
+          <h2>Confirm Deletion</h2>
           <p>Deleting a project will delete all its tasks. Are you sure you want to delete this project?</p>
         </div>
         <div>
