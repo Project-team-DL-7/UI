@@ -1,13 +1,5 @@
 const API_URL = "http://localhost:8000";
 
-export async function getProject(id) {
-  const res = await fetch(`${API_URL}/project/${id}`);
-  if (!res.ok) throw Error(`Couldn't find project #${id}`);
-
-  const project = await res.json();
-  return project;
-}
-
 export async function createProject(newProject) {
   try {
     const res = await fetch(`${API_URL}/project`, {

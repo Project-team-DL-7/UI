@@ -4,11 +4,14 @@ import Modal from "../../ui/Modal";
 import Team from "./Team";
 import CreateTeamForm from "./CreateTeamForm";
 import { ProjectContext } from "../../contexts/ProjectContext";
+import Loading from "../../ui/Loading";
 
 const TeamsBox = () => {
   const [showModal, setShowModal] = useState(false);
-  const { teams, refetchTeams } = useContext(ProjectContext);
+  const { teams, refetchTeams, isTeamLoading } = useContext(ProjectContext);
   const [search, setSearch] = useState("");
+
+  if (isTeamLoading) return <Loading />;
 
   const filteredTeams = teams.filter((team) => {
     return team.team_name.includes(search);

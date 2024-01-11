@@ -37,7 +37,7 @@ const CreateTeam = ({ setShowModal, refetch }) => {
       <input
         type="text"
         placeholder="Team Name"
-        className="bg-blue-200 rounded-md text-center"
+        className="bg-blue-200 rounded-md text-center w-[70%] h-[2rem]"
         value={teamName}
         onChange={(e) => setTeamName(e.target.value)}
       />

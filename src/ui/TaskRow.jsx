@@ -1,7 +1,5 @@
 import React from "react";
 import TaskDelete from "../features/tasks/TaskDelete";
-import { useQuery } from "react-query";
-import { getTask } from "../services/taskApi";
 import { Link } from "react-router-dom";
 
 const TaskRow = ({ taskId, data, refetch }) => {

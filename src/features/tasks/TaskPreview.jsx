@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { getTask } from "../../services/taskApi";
 import { useQuery } from "react-query";
 
 const TaskPreview = ({ taskId }) => {

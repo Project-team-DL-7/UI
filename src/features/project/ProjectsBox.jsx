@@ -10,6 +10,10 @@ const ProjectBox = () => {
   const { projects, refetchProjects } = useContext(ProjectContext);
   const [search, setSearch] = useState("");
 
+  if (!projects) {
+    return null;
+  }
+
   const filteredProjects = projects.filter((project) => {
     return project.id_project.toString().includes(search);
   });

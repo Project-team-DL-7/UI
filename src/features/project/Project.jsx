@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { getProject } from "../../services/projectApi";
 import { useQuery } from "react-query";
 
 const Project = ({ projectId, data }) => {

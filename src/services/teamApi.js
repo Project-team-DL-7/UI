@@ -1,13 +1,5 @@
 const API_URL = "http://localhost:8000";
 
-export async function getTeam(id) {
-  const res = await fetch(`${API_URL}/team/${id}`);
-  if (!res.ok) throw Error(`Couldn't find team #${id}`);
-
-  const team = await res.json();
-  return team;
-}
-
 export async function createTeam(newTeam) {
   try {
     const res = await fetch(`${API_URL}/team`, {

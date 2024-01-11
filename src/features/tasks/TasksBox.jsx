@@ -2,17 +2,21 @@ import React, { useContext, useState } from "react";
 import Modal from "../../ui/Modal";
 import Task from "./Task";
 import CreateTask from "./CreateTask";
+import Loading from "../../ui/Loading";
 import { ProjectContext } from "../../contexts/ProjectContext";
 
 const TasksBox = () => {
   const [showModal, setShowModal] = useState(false);
-  const { tasks, refetchTasks } = useContext(ProjectContext);
+  const { tasks, refetchTasks, isTaskLoading } = useContext(ProjectContext);
 
   function handleModal() {
     setShowModal(true);
   }
 
-  const projectIds = [...new Set(tasks.map((task) => task.id_project))];
+  if (isTaskLoading) return <Loading />;
+
+  console.log(tasks);
+  const teamsIds = [...new Set(tasks.map((task) => task.id_team))];
 
   return (
     <div className="h-full p-4 ">
@@ -20,17 +24,16 @@ const TasksBox = () => {
         Tasks
       </h1>
       <div className="grid grid-cols-1 auto-rows-auto mt-5">
-        {projectIds.map((id) => {
-          const tasksForProject = tasks.filter(
-            (task) => task.id_project === id
-          );
+        {teamsIds.map((id) => {
+          const tasksForTeams = tasks.filter((task) => task.id_team === id);
           return (
             <Task
               showModal={handleModal}
               projectId={id}
               key={id}
-              tasks={tasksForProject}
+              tasks={tasksForTeams}
               refetch={refetchTasks}
+              isTaskLoading={isTaskLoading}
             />
           );
         })}

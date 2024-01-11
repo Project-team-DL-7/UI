@@ -1,27 +1,19 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link, useParams } from "react-router-dom";
 import Box from "../../ui/Box";
-import { getTask } from "../../services/taskApi";
-import { useQuery } from "react-query";
+import Loading from "../../ui/Loading";
 import TaskDelete from "./TaskDelete";
+import { ProjectContext } from "../../contexts/ProjectContext";
 
 const TaskDetail = () => {
   const { id } = useParams();
-  console.log(id);
+  const { tasks, refetchTasks, isTaskLoading } = useContext(ProjectContext);
 
-  const { data, isLoading, isError } = useQuery(["task", id], () =>
-    getTask(id)
-  );
+  if (isTaskLoading) return <Loading />;
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
+  const task = tasks.find((task) => task.id_task === Number(id));
 
-  if (isError || !data || !data.deadline) {
-    return <div>Error fetching task or missing deadline</div>;
-  }
-
-  const deadlineDate = new Date(data.deadline);
+  const deadlineDate = new Date(task.deadline);
   const options = { day: "2-digit", month: "2-digit", year: "numeric" };
   const dateString = deadlineDate
     .toLocaleDateString(undefined, options)
@@ -32,7 +24,7 @@ const TaskDetail = () => {
       <div className="flex flex-col items-center">
         <div className="flex w-full justify-between items-center px-2">
           <h1 className="p-3 text-4xl font-bold text-blue-800 ">
-            {data.task_name}
+            {task.task_name}
           </h1>
           <Link to={`/tasks`}>
             <TaskDelete size={30} taskId={id} />
@@ -43,13 +35,13 @@ const TaskDetail = () => {
         <div className="flex max-h-[12rem] items-center">
           <p className="text-xl font-bold text-blue-800">Project Id:</p>
           <p className="overflow-wrap-normal max-h-[10rem] overflow-y-auto ml-10 font-bold">
-            {data.id_project}
+            {task.id_project}
           </p>
         </div>
         <div className="flex max-h-[12rem] items-center">
           <p className="text-xl font-bold text-blue-800">Description:</p>
           <p className="overflow-wrap-normal max-h-[10rem] overflow-y-auto ml-5">
-            {data.description}
+            {task.description}
           </p>
         </div>
         <div className="flex items-center">

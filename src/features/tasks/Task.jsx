@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import Button from "../../ui/Button";
 import TaskRow from "../../ui/TaskRow";
+import Loading from "../../ui/Loading";
 
-const Task = ({ showModal, tasks, refetch }) => {
+const Task = ({ showModal, tasks, refetch, isTaskLoading }) => {
   const [search, setSearch] = useState("");
+
+  if (isTaskLoading) return <Loading />;
 
   const filteredTasks = tasks.filter((task) => {
     return task.task_name.includes(search);

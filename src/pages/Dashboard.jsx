@@ -7,6 +7,11 @@ import { ProjectContext } from "./../contexts/ProjectContext";
 
 const Dashboard = () => {
   const { projects } = useContext(ProjectContext);
+
+  if (!projects) {
+    return null;
+  }
+
   const projectLenght = projects.length;
 
   const displayProjects = projectLenght > 10 ? 10 : projectLenght;
