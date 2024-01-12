@@ -1,22 +1,8 @@
 import React from "react";
 import TaskDelete from "../features/tasks/TaskDelete";
-import { useQuery } from "react-query";
-import { getTask } from "../services/taskApi";
 import { Link } from "react-router-dom";
 
-const TaskRow = ({ taskId }) => {
-  const { data, isLoading, isError } = useQuery(["task", taskId], () =>
-    getTask(taskId)
-  );
-
-  if (isLoading) {
-    return <div className="my-2">Loading...</div>;
-  }
-
-  if (isError) {
-    return <div className="my-2">Error fetching task </div>;
-  }
-
+const TaskRow = ({ taskId, data, refetch }) => {
   const deadlineDate = new Date(data.deadline);
   const options = { day: "2-digit", month: "2-digit", year: "numeric" };
   const dateString = deadlineDate
@@ -36,7 +22,7 @@ const TaskRow = ({ taskId }) => {
         <h1>{dateString}</h1>
       </div>
       <div className="col-span-1 flex justify-center items-center">
-        <TaskDelete taskId={taskId} size={20} />
+        <TaskDelete size={30} taskId={taskId} refetch={refetch} />
       </div>
     </div>
   );

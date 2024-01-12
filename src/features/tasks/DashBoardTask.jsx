@@ -1,22 +1,8 @@
 import React from "react";
 import TaskDelete from "../tasks/TaskDelete";
-import { useQuery } from "react-query";
-import { getTask } from "../../services/taskApi";
 import { Link } from "react-router-dom";
 
-const DashBoardTask = ({ taskId }) => {
-  const { data, isLoading, isError } = useQuery(["task", taskId], () =>
-    getTask(taskId)
-  );
-
-  if (isLoading) {
-    return <div className="my-2">Loading...</div>;
-  }
-
-  if (isError) {
-    return <div className="my-2">Error fetching task </div>;
-  }
-
+const DashBoardTask = ({ taskId, data }) => {
   const deadlineDate = new Date(data.deadline);
   const options = { day: "2-digit", month: "2-digit", year: "numeric" };
   const dateString = deadlineDate

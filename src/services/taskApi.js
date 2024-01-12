@@ -1,14 +1,30 @@
-import axios from "axios";
 const API_URL = "http://localhost:8000";
 
-export function getTask(id) {
-  return axios.get(`${API_URL}/task/${id}`).then((res) => res.data);
+export async function createTask(task) {
+  const response = await fetch(`${API_URL}/task`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+    body: JSON.stringify(task),
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to create task");
+  }
+
+  return response.json();
 }
 
-export function createTask(task) {
-  return axios.post(`${API_URL}/task`, task).then((res) => res.data);
-}
+export async function deleteTask(id) {
+  const response = await fetch(`${API_URL}/task/${id}`, {
+    method: "DELETE",
+  });
 
-export function deleteTask(id) {
-  return axios.delete(`${API_URL}/task/${id}`).then((res) => res.data);
+  if (!response.ok) {
+    throw new Error("Failed to delete task");
+  }
+
+  return response.json();
 }

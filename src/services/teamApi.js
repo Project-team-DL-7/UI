@@ -1,13 +1,5 @@
 const API_URL = "http://localhost:8000";
 
-export async function getTeam(id) {
-  const res = await fetch(`${API_URL}/team/${id}`);
-  if (!res.ok) throw Error(`Couldn't find team #${id}`);
-
-  const team = await res.json();
-  return team;
-}
-
 export async function createTeam(newTeam) {
   try {
     const res = await fetch(`${API_URL}/team`, {
@@ -16,6 +8,7 @@ export async function createTeam(newTeam) {
       headers: {
         "Content-Type": "application/json",
       },
+      credentials: "include",
     });
 
     if (!res.ok) throw Error();
@@ -36,4 +29,33 @@ export async function deleteTeam(id) {
   }
 
   return { success: true, message: `Team #${id} deleted successfully` };
+}
+
+export async function updateTeam(updatedTeam) {
+  try {
+    const res = await fetch(`${API_URL}/team`, {
+      method: "PUT",
+      body: JSON.stringify({
+        id_team: Number(updatedTeam.id_team),
+        description: updatedTeam.description,
+        team_name: updatedTeam.team_name,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+    });
+
+    if (!res.ok) {
+      const error = await res.json(); // Try to get error message from server
+      throw new Error(
+        `Request failed with status ${res.status}: ${error.message}`
+      );
+    }
+    const team = await res.json();
+    return team;
+  } catch (error) {
+    console.error(error); // Log the error
+    throw Error("Failed updating your team");
+  }
 }

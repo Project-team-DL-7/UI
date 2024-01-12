@@ -1,33 +1,40 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import Button from "../../ui/Button";
 import { createProject } from "../../services/projectApi";
 import { useMutation } from "react-query";
+import { ProjectContext } from "../../contexts/ProjectContext";
+import { useToast } from "../../contexts/ToastContext";
 
-const CreateProjectForm = ({ setShowModal }) => {
+const CreateProjectForm = ({ setShowModal, refetch }) => {
+  const [name, setName] = useState("");
   const [description, setDescription] = useState("");
+  const { showToast } = useToast();
+  const { teams } = useContext(ProjectContext);
+
+  // Initialize id_team with the first team's ID or an empty string if no teams are available
+  const [id_team, setIdTeam] = useState(teams.length > 0 ? teams[0].id_team : "");
 
   const { mutate: createProjectMutation } = useMutation(
-    (newDescription) => createProject({ description: newDescription }),
+    (newProject) => createProject(newProject),
     {
-      onSuccess: (newProject) => {
-        console.log("New project created:", newProject);
+      onSuccess: () => {
+        showToast("Project created successfully", "success");
         setShowModal(false);
+        refetch();
       },
       onError: (error) => {
-        console.error("Failed to create project:", error.message);
+        showToast(`Error: ${error.message}`, "error");
         setShowModal(false);
       },
     }
   );
 
-  const handleInputChange = (event) => {
-    setDescription(event.target.value);
-  };
-
   const handleSubmit = (event) => {
     event.preventDefault();
-    createProjectMutation(description);
+    const projectData = { name, description, id_team: Number(id_team) };
+    createProjectMutation(projectData);
   };
+
   return (
     <form
       className="flex flex-col gap-6 items-center py-12"
@@ -36,13 +43,30 @@ const CreateProjectForm = ({ setShowModal }) => {
       <h1 className="text-3xl mt-5 font-bold shadow-md shadow-gray-100">
         Create New Project
       </h1>
-      <textarea
+      <input
         type="text"
+        placeholder="Name"
+        className="bg-blue-200 rounded-md text-center inline-block w-full py-3 px-4"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+      />
+      <textarea
         placeholder="Description"
         className="bg-blue-200 rounded-md text-center inline-block w-full py-3 px-4 h-[10rem]"
         value={description}
-        onChange={handleInputChange}
+        onChange={(e) => setDescription(e.target.value)}
       />
+      <select
+        className="bg-blue-200 rounded-md text-center inline-block w-full py-3 px-4"
+        value={id_team}
+        onChange={(e) => setIdTeam(e.target.value)}
+      >
+        {teams.map((team) => (
+          <option key={team.id_team} value={team.id_team}>
+            {team.team_name}
+          </option>
+        ))}
+      </select>
       <Button text={"Submit"} type="submit" />
     </form>
   );

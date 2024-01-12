@@ -1,25 +1,24 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import Box from "../../ui/Box";
 import TeamMember from "./TeamMember";
 import { useParams } from "react-router-dom";
-import { getTeam } from "../../services/teamApi";
 import TeamDelete from "./TeamDelete";
-import { useQuery } from "react-query";
+import TeamUpdate from "./TeamUpdate";
+import { ProjectContext } from "../../contexts/ProjectContext";
+import Loading from "../../ui/Loading";
+import TaskPreview from "../tasks/TaskPreview";
+import Button from "../../ui/Button";
+import Modal from "../../ui/Modal";
+import AddTeamMember from "./AddTeamMember";
 
 const TeamDetails = () => {
   const { id } = useParams();
+  const { teams, refetchTeam, isTeamLoading } = useContext(ProjectContext);
+  const [showModal, setShowModal] = useState(false);
 
-  const { data: team, isLoading } = useQuery(["team", id], () => getTeam(id), {
-    enabled: !!id,
-  });
+  if (isTeamLoading) return <Loading />;
 
-  if (!id) {
-    return <div>Please select a team</div>;
-  }
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
+  const team = teams.find((team) => team.id_team === Number(id));
 
   return (
     <Box>
@@ -28,14 +27,52 @@ const TeamDetails = () => {
           <h1 className="p-3 text-3xl font-bold text-blue-800">
             {team.team_name}
           </h1>
-          <TeamDelete id={id} />
+          <div className="flex gap-2">
+            <TeamUpdate
+              id={id}
+              refetch={refetchTeam}
+              originalName={team.team_name}
+              originalDescription={team.description}
+            />
+
+            <TeamDelete id={id} refetch={refetchTeam} />
+          </div>
         </div>
       </div>
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-2 mt-5 ml-2 ">
-        <TeamMember />
-        <TeamMember />
-        <TeamMember />
+      <Button
+        text={"Add Member"}
+        className={"ml-5"}
+        onClick={() => setShowModal(true)}
+      />
+      <div className="grid grid-cols-5 md:grid-cols-4 gap-2 mt-5 mx-2 h-[90%]">
+        {/* members */}
+        <div className="col-span-2  border-[1px] border-gray-500 px-2 max-h-[80%] overflow-y-auto">
+          <h1 className="text-xl font-bold text-blue-800 text-center mb-3">
+            Members
+          </h1>
+          <TeamMember />
+          <TeamMember />
+          <TeamMember />
+          <TeamMember />
+          <TeamMember />
+          <TeamMember />
+          <TeamMember />
+          <TeamMember />
+          <TeamMember />
+          <TeamMember />
+          <TeamMember />
+        </div>
+        {/* tasks */}
+        <div className="col-span-2  border-[1px] border-gray-500 px-2 max-h-[80%] overflow-y-auto">
+          <h1 className="text-xl font-bold text-blue-800 text-center mb-3">
+            Tasks
+          </h1>
+          <TaskPreview />
+        </div>
       </div>
+      <Modal isVisible={showModal} setIsVisible={setShowModal}>
+        <AddTeamMember />
+      </Modal>
     </Box>
   );
 };

@@ -1,13 +1,5 @@
 const API_URL = "http://localhost:8000";
 
-export async function getProject(id) {
-  const res = await fetch(`${API_URL}/project/${id}`);
-  if (!res.ok) throw Error(`Couldn't find project #${id}`);
-
-  const project = await res.json();
-  return project;
-}
-
 export async function createProject(newProject) {
   try {
     const res = await fetch(`${API_URL}/project`, {
@@ -16,6 +8,7 @@ export async function createProject(newProject) {
       headers: {
         "Content-Type": "application/json",
       },
+      credentials: "include",
     });
 
     if (!res.ok) throw Error();
@@ -36,4 +29,25 @@ export async function deleteProject(id) {
   }
 
   return { success: true, message: `Project #${id} deleted successfully` };
+}
+
+export async function updateProject(updatedProject) {
+  try {
+    const res = await fetch(`${API_URL}/project/${updatedProject.id_project}`, {
+      method: "PUT",
+      body: JSON.stringify({
+        description: updatedProject.description,
+        name: updatedProject.name
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!res.ok) throw Error();
+    const project = await res.json();
+    return project;
+  } catch {
+    throw Error("Failed updating your project");
+  }
 }

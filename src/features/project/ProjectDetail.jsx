@@ -1,44 +1,44 @@
 import { useParams } from "react-router-dom";
-import { getProject } from "../../services/projectApi";
-import { useEffect, useState } from "react";
+import { useContext } from "react";
 import Box from "../../ui/Box";
 import ProjectDelete from "./ProjectDelete";
+import ProjectUpdate from "./ProjectUpdate"; // Import the ProjectUpdate component
 import TeamProjectCard from "../teams/TeamProjectCard";
 import TaskProjectCard from "../tasks/TaskProjectCard";
-import { useQuery } from "react-query";
+import { ProjectContext } from "../../contexts/ProjectContext";
+import Loading from "../../ui/Loading";
 
 const ProjectDetail = () => {
   const { id } = useParams();
+  const { projects, refetchProjects, isProjectsLoading } =
+    useContext(ProjectContext);
 
-  const {
-    data: project,
-    isLoading,
-    isError,
-  } = useQuery(["project", id], () => getProject(id), {
-    enabled: !!id,
-  });
+  if (isProjectsLoading) return <Loading />;
 
-  if (!id) {
-    return <div>Please select a project</div>;
-  }
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
-  if (isError || !project) {
-    return <div>Error fetching project</div>;
-  }
+  const project = projects.find((project) => project.id_project === Number(id));
 
   return (
     <Box>
-      <div className="flex justify-end p-3">
-        <ProjectDelete id={id} />
-      </div>
-      <div className="flex flex-col items-center">
-        <h1 className="text-3xl font-bold  text-blue-800">
-          Project {project.id_project}
+      <div className="flex justify-between p-3">
+        <h1 className="text-3xl font-bold  text-blue-800 self-start ml-[10%]">
+          {project ? project.name : ""}
         </h1>
+        <div className="flex gap-3">
+          <ProjectUpdate
+            id={id}
+            refetch={refetchProjects}
+            originalName={project.name}
+            originalDescription={project.description}
+          />
+          <ProjectDelete id={id} refetch={refetchProjects} />
+        </div>
+      </div>
+      {project && project.description && project.description.length > 5 && (
+        <p className="h-[4rem] mx-14 border-[1px] rounded-md border-gray-500 px-2 overflow-auto break-words">
+          {project.description}
+        </p>
+      )}
+      <div className="flex flex-col items-center">
         <div className="flex flex-col my-4 gap-8 w-[90%] md:flex-row md:h-[28rem]">
           <div className="h-[15rem] border-gray-400 border-[2px] rounded-md shadow-gray-500 shadow-md md:w-[50%] md:h-[100%] overflow-auto">
             <TeamProjectCard />
