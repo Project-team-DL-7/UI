@@ -3,30 +3,32 @@ import Button from "../../ui/Button";
 import { createProject } from "../../services/projectApi";
 import { useMutation } from "react-query";
 import { ProjectContext } from "../../contexts/ProjectContext";
+import { useToast } from "../../contexts/ToastContext";
 
 const CreateProjectForm = ({ setShowModal, refetch }) => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [id_team, setIdTeam] = useState(""); // Initialize with empty string
+  const [id_team, setIdTeam] = useState("");
+  const { showToast } = useToast();
 
   const { teams } = useContext(ProjectContext);
 
   useEffect(() => {
     if (teams.length > 0) {
-      setIdTeam(teams[0].id_team); // Update id_team once teams are loaded
+      setIdTeam(teams[0].id_team);
     }
-  }, [teams]); // Dependency array includes teams
+  }, [teams]);
 
   const { mutate: createProjectMutation } = useMutation(
     (newProject) => createProject(newProject),
     {
       onSuccess: (newProject) => {
-        console.log("New project created:", newProject);
+        showToast("Project created successfully", "success");
         setShowModal(false);
         refetch();
       },
       onError: (error) => {
-        console.error("Failed to create project:", error.message);
+        showToast(`Error: ${error.message}`, "error");
         setShowModal(false);
       },
     }
@@ -51,7 +53,12 @@ const CreateProjectForm = ({ setShowModal, refetch }) => {
   };
 
   if (teams.length === 0) {
-    return <div>Loading teams or no teams available, you need to be in Team in order to create Project</div>;
+    return (
+      <div>
+        Loading teams or no teams available, you need to be in Team in order to
+        create Project
+      </div>
+    );
   }
 
   return (

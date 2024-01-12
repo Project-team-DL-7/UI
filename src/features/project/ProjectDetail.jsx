@@ -33,6 +33,11 @@ const ProjectDetail = () => {
           <ProjectDelete id={id} refetch={refetchProjects} />
         </div>
       </div>
+      {project && project.description && project.description.length > 5 && (
+        <p className="h-[4rem] mx-14 border-[1px] rounded-md border-gray-500 px-2 overflow-auto break-words">
+          {project.description}
+        </p>
+      )}
       <div className="flex flex-col items-center">
         <div className="flex flex-col my-4 gap-8 w-[90%] md:flex-row md:h-[28rem]">
           <div className="h-[15rem] border-gray-400 border-[2px] rounded-md shadow-gray-500 shadow-md md:w-[50%] md:h-[100%] overflow-auto">

@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import Box from "../../ui/Box";
 import TeamMember from "./TeamMember";
 import { useParams } from "react-router-dom";
@@ -6,10 +6,15 @@ import TeamDelete from "./TeamDelete";
 import TeamUpdate from "./TeamUpdate";
 import { ProjectContext } from "../../contexts/ProjectContext";
 import Loading from "../../ui/Loading";
+import TaskPreview from "../tasks/TaskPreview";
+import Button from "../../ui/Button";
+import Modal from "../../ui/Modal";
+import AddTeamMember from "./AddTeamMember";
 
 const TeamDetails = () => {
   const { id } = useParams();
   const { teams, refetchTeam, isTeamLoading } = useContext(ProjectContext);
+  const [showModal, setShowModal] = useState(false);
 
   if (isTeamLoading) return <Loading />;
 
@@ -34,6 +39,11 @@ const TeamDetails = () => {
           </div>
         </div>
       </div>
+      <Button
+        text={"Add Member"}
+        className={"ml-5"}
+        onClick={() => setShowModal(true)}
+      />
       <div className="grid grid-cols-5 md:grid-cols-4 gap-2 mt-5 mx-2 h-[90%]">
         {/* members */}
         <div className="col-span-2  border-[1px] border-gray-500 px-2 max-h-[80%] overflow-y-auto">
@@ -54,9 +64,15 @@ const TeamDetails = () => {
         </div>
         {/* tasks */}
         <div className="col-span-2  border-[1px] border-gray-500 px-2 max-h-[80%] overflow-y-auto">
-          <h1 className="text-xl font-bold text-blue-800 text-center">Tasks</h1>
+          <h1 className="text-xl font-bold text-blue-800 text-center mb-3">
+            Tasks
+          </h1>
+          <TaskPreview />
         </div>
       </div>
+      <Modal isVisible={showModal} setIsVisible={setShowModal}>
+        <AddTeamMember />
+      </Modal>
     </Box>
   );
 };

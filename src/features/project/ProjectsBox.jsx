@@ -15,7 +15,9 @@ const ProjectBox = () => {
   }
 
   const filteredProjects = projects.filter((project) => {
-    return project.name && project.name.toLowerCase().includes(search.toLowerCase());
+    return (
+      project.name && project.name.toLowerCase().includes(search.toLowerCase())
+    );
   });
 
   return (
@@ -47,7 +49,7 @@ const ProjectBox = () => {
         {filteredProjects.map((project) => (
           <Project
             projectId={project.id_project}
-            projectName={project.name} // pass the project name here
+            projectName={project.name}
             data={project}
             key={project.id_project}
           />
