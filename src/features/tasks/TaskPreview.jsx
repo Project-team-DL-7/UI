@@ -1,29 +1,13 @@
-import React, { useEffect, useState } from "react";
-import { useQuery } from "react-query";
+import React from "react";
 
-const TaskPreview = ({ taskId }) => {
-  const { data: task, isLoading } = useQuery(
-    ["task", taskId],
-    () => getTask(taskId),
-    {
-      enabled: !!taskId,
-    }
-  );
-
-  if (!taskId) {
-    return <div>Please provide a task ID</div>;
-  }
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
+const TaskPreview = ({ data }) => {
   return (
-    <tr className="bg-gray-50 border-b-[2px] border-gray-200 text-center">
-      <td className="p-2 bg-gray-300">{task.id_task}</td>
-      <td>
-        <h1 className="">{task.task_name}</h1>
-      </td>
-    </tr>
+    <div className="col-span-3 grid mx-3 border-[1px] border-gray-500 rounded-md grid-cols-3 hover:shadow-md hover:shadow-gray-400 hover:cursor-pointer">
+      <h1 className="text-center col-span-2 border-r-[1px] border-gray-500">
+        Test
+      </h1>
+      <h1 className="text-center">Deadline</h1>
+    </div>
   );
 };
 

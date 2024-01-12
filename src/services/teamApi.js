@@ -11,7 +11,6 @@ export async function createTeam(newTeam) {
       credentials: "include",
     });
 
-
     if (!res.ok) throw Error();
     const team = await res.json();
     return team;
@@ -39,18 +38,24 @@ export async function updateTeam(updatedTeam) {
       body: JSON.stringify({
         id_team: Number(updatedTeam.id_team), // Convert id_team to a number
         description: updatedTeam.description,
-        team_name: updatedTeam.team_name
+        team_name: updatedTeam.team_name,
       }),
       headers: {
         "Content-Type": "application/json",
       },
-      credentials: 'include',
+      credentials: "include",
     });
 
-    if (!res.ok) throw Error();
+    if (!res.ok) {
+      const error = await res.json(); // Try to get error message from server
+      throw new Error(
+        `Request failed with status ${res.status}: ${error.message}`
+      );
+    }
     const team = await res.json();
     return team;
-  } catch {
+  } catch (error) {
+    console.error(error); // Log the error
     throw Error("Failed updating your team");
   }
 }

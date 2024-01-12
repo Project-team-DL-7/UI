@@ -57,9 +57,6 @@ const Dashboard = () => {
 
           {/*  Teams */}
           <div className="grid grid-cols-1 md:grid-cols-2 justify-items-center gap-4 max-h-[12rem] overflow-y-auto">
-            {/* <DashBoardTeam teamId={1} />
-            <DashBoardTeam teamId={1} />
-            <DashBoardTeam teamId={1} /> */}
             {Array.from({ length: displayTeams }, (_, i) => (
               <DashBoardTeam
                 teamId={teams[i].id_team}

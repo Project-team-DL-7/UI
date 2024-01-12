@@ -20,12 +20,12 @@ const TasksBox = () => {
 
   return (
     <div className="h-full p-4 ">
-      <h1 className="flex w-full justify-center text-3xl font-bold text-blue-800">
-        My Tasks
-      </h1>
-      <div className="flex justify-end"> {/* Add this div */}
-        <Button text="Create Task" onClick={handleModal} /> {/* Remove the self-center class */}
+      <div className="flex justify-between">
+        <input placeholder="search" className="rounded-md text-center" />
+        <h1 className="text-3xl font-bold text-blue-800">My Tasks</h1>
+        <Button text="Create Task" onClick={handleModal} />
       </div>
+
       <div className="grid grid-cols-1 auto-rows-auto mt-5">
         {teamsIds.map((id) => {
           const tasksForTeams = tasks.filter((task) => task.id_project === id);
