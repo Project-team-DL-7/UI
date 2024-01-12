@@ -45,6 +45,13 @@ const TeamDetails = () => {
         onClick={() => setShowModal(true)}
       />
       <div className="grid grid-cols-5 md:grid-cols-4 gap-2 mt-5 mx-2 h-[90%]">
+        {/* tasks */}
+        <div className="col-span-2  border-[1px] border-gray-500 px-2 max-h-[80%] overflow-y-auto">
+          <h1 className="text-xl font-bold text-blue-800 text-center mb-3">
+            Description
+          </h1>
+          <p className="font-bold">{team.description}</p>
+        </div>
         {/* members */}
         <div className="col-span-2  border-[1px] border-gray-500 px-2 max-h-[80%] overflow-y-auto">
           <h1 className="text-xl font-bold text-blue-800 text-center mb-3">
@@ -61,13 +68,6 @@ const TeamDetails = () => {
           <TeamMember />
           <TeamMember />
           <TeamMember />
-        </div>
-        {/* tasks */}
-        <div className="col-span-2  border-[1px] border-gray-500 px-2 max-h-[80%] overflow-y-auto">
-          <h1 className="text-xl font-bold text-blue-800 text-center mb-3">
-            Tasks
-          </h1>
-          <TaskPreview />
         </div>
       </div>
       <Modal isVisible={showModal} setIsVisible={setShowModal}>
