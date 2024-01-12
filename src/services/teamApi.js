@@ -36,7 +36,7 @@ export async function updateTeam(updatedTeam) {
     const res = await fetch(`${API_URL}/team`, {
       method: "PUT",
       body: JSON.stringify({
-        id_team: Number(updatedTeam.id_team), // Convert id_team to a number
+        id_team: Number(updatedTeam.id_team),
         description: updatedTeam.description,
         team_name: updatedTeam.team_name,
       }),
