@@ -9,6 +9,7 @@ const CreateTaskForm = ({ setShowModal, refetch }) => {
   const [taskName, setTaskName] = useState("");
   const [description, setDescription] = useState("");
   const [deadline, setDeadline] = useState("");
+  const [status, setStatus] = useState("TO DO"); 
   const { showToast } = useToast();
   const { projects } = useContext(ProjectContext);
 
@@ -41,6 +42,7 @@ const CreateTaskForm = ({ setShowModal, refetch }) => {
       description,
       deadline: new Date(deadline).getTime(),
       id_project: Number(projectId),
+      status, 
     };
     createTaskMutation(taskData);
   };

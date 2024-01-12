@@ -35,6 +35,15 @@ const CreateProjectForm = ({ setShowModal, refetch }) => {
     createProjectMutation(projectData);
   };
 
+  if (teams.length === 0) {
+    return (
+      <div>
+        Loading teams or no teams available, you need to be in a team
+        in order to create a project
+      </div>
+    );
+  }
+
   return (
     <form
       className="flex flex-col gap-6 items-center py-12"
