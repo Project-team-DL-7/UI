@@ -7,7 +7,7 @@ import { ProjectContext } from "../../contexts/ProjectContext";
 
 const TaskDetail = () => {
   const { id } = useParams();
-  const { tasks, refetchTasks, isTaskLoading } = useContext(ProjectContext);
+  const { tasks, refetchTask, isTaskLoading } = useContext(ProjectContext);
 
   if (isTaskLoading) return <Loading />;
 
@@ -27,7 +27,7 @@ const TaskDetail = () => {
             {task.task_name}
           </h1>
           <Link to={`/tasks`}>
-            <TaskDelete size={30} taskId={id} refetch={refetchTasks} />
+            <TaskDelete size={30} taskId={id} refetch={refetchTask} />
           </Link>
         </div>
       </div>

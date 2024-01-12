@@ -2,12 +2,13 @@ import React, { useState } from "react";
 import { HiOutlineArchiveBoxXMark } from "react-icons/hi2";
 import { useMutation, useQueryClient } from "react-query";
 import { deleteTask } from "../../services/taskApi";
+import { useToast } from "../../contexts/ToastContext";
 
 import Modal from "react-modal";
 
 const TaskDelete = ({ taskId, size, refetch }) => {
-  const queryClient = useQueryClient();
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const { showToast } = useToast();
 
   const mutation = useMutation(() => deleteTask(taskId), {
     onSuccess: () => {

@@ -8,14 +8,14 @@ import Loading from "../../ui/Loading";
 
 const TasksBox = () => {
   const [showModal, setShowModal] = useState(false);
-  const { tasks, refetchTask, isTaskLoading } = useContext(ProjectContext);
+  const { tasks, refetchTask, isTaskLoading, projects } = useContext(ProjectContext);
   const [search, setSearch] = useState("");
 
   if (isTaskLoading) return <Loading />;
 
   const filteredTasks = tasks.filter((task) => {
     return (
-      task.name && task.name.toLowerCase().includes(search.toLowerCase())
+      task.task_name && task.task_name.toLowerCase().includes(search.toLowerCase())
     );
   });
 
@@ -45,16 +45,20 @@ const TasksBox = () => {
         />
       </div>
       <div className="grid grid-cols-1 auto-rows-auto mt-5">
-        {filteredTasks.map((task) => (
-          <Task
-            setShowModal={setShowModal}
-            projectId={task.id_project}
-            key={task.id_project}
-            tasks={filteredTasks}
-            refetch={refetchTask}
-            isTaskLoading={isTaskLoading}
-          />
-        ))}
+        {projects
+          .filter((project) =>
+            filteredTasks.some((task) => task.id_project === project.id_project)
+          )
+          .map((project) => (
+            <Task
+              setShowModal={setShowModal}
+              projectId={project.id_project}
+              key={project.id_project}
+              tasks={filteredTasks}
+              refetch={refetchTask}
+              isTaskLoading={isTaskLoading}
+            />
+            ))}
       </div>
       <Modal isVisible={showModal} setIsVisible={setShowModal}>
         <CreateTaskForm setShowModal={setShowModal} refetch={refetchTask} />

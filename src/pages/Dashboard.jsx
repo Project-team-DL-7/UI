@@ -45,7 +45,7 @@ const Dashboard = () => {
                 taskId={tasks[i].id_task}
                 name={tasks[i].name}
                 data={tasks[i]}
-                key={tasks[i].description}
+                key={tasks[i]}
               />
             ))}
           </div>

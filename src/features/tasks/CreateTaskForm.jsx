@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import Button from "../../ui/Button";
 import { createTask } from "../../services/taskApi";
 import { useMutation } from "react-query";
@@ -9,29 +9,22 @@ const CreateTaskForm = ({ setShowModal, refetch }) => {
   const [taskName, setTaskName] = useState("");
   const [description, setDescription] = useState("");
   const [deadline, setDeadline] = useState("");
-  const [projectId, setProjectId] = useState("");
   const { showToast } = useToast();
-
   const { projects } = useContext(ProjectContext);
 
-  useEffect(() => {
-    if (projects.length > 0) {
-      setProjectId(projects[0].id_project);
-    }
-  }, [projects]);
+  // Initialize projectId with the first project's ID or an empty string if no projects are available
+  const [projectId, setProjectId] = useState(projects.length > 0 ? projects[0].id_project : "");
 
   const { mutate: createTaskMutation } = useMutation(
     (newTask) => createTask(newTask),
     {
-      onSuccess: (newTask) => {
+      onSuccess: () => {
         showToast("Task created successfully", "success");
-        console.log(setShowModal);
         setShowModal(false);
         refetch();
       },
       onError: (error) => {
         showToast(`Error: ${error.message}`, "error");
-        console.log(setShowModal);
         setShowModal(false);
       },
     }

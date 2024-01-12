@@ -22,7 +22,7 @@ const TaskRow = ({ taskId, data, refetch }) => {
         <h1>{dateString}</h1>
       </div>
       <div className="col-span-1 flex justify-center items-center">
-        <TaskDelete taskId={taskId} size={20} refetch={refetch} />
+        <TaskDelete size={30} taskId={taskId} refetch={refetch} />
       </div>
     </div>
   );

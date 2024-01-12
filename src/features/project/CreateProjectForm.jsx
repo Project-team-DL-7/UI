@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react"; // Import useEffect
+import React, { useState, useContext } from "react";
 import Button from "../../ui/Button";
 import { createProject } from "../../services/projectApi";
 import { useMutation } from "react-query";
@@ -8,21 +8,16 @@ import { useToast } from "../../contexts/ToastContext";
 const CreateProjectForm = ({ setShowModal, refetch }) => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [id_team, setIdTeam] = useState("");
   const { showToast } = useToast();
-
   const { teams } = useContext(ProjectContext);
 
-  useEffect(() => {
-    if (teams.length > 0) {
-      setIdTeam(teams[0].id_team);
-    }
-  }, [teams]);
+  // Initialize id_team with the first team's ID or an empty string if no teams are available
+  const [id_team, setIdTeam] = useState(teams.length > 0 ? teams[0].id_team : "");
 
   const { mutate: createProjectMutation } = useMutation(
     (newProject) => createProject(newProject),
     {
-      onSuccess: (newProject) => {
+      onSuccess: () => {
         showToast("Project created successfully", "success");
         setShowModal(false);
         refetch();
@@ -34,32 +29,11 @@ const CreateProjectForm = ({ setShowModal, refetch }) => {
     }
   );
 
-  const handleNameChange = (event) => {
-    setName(event.target.value);
-  };
-
-  const handleInputChange = (event) => {
-    setDescription(event.target.value);
-  };
-
-  const handleTeamChange = (event) => {
-    setIdTeam(event.target.value);
-  };
-
   const handleSubmit = (event) => {
     event.preventDefault();
     const projectData = { name, description, id_team: Number(id_team) };
     createProjectMutation(projectData);
   };
-
-  if (teams.length === 0) {
-    return (
-      <div>
-        Loading teams or no teams available, you need to be in Team in order to
-        create Project
-      </div>
-    );
-  }
 
   return (
     <form
@@ -74,19 +48,18 @@ const CreateProjectForm = ({ setShowModal, refetch }) => {
         placeholder="Name"
         className="bg-blue-200 rounded-md text-center inline-block w-full py-3 px-4"
         value={name}
-        onChange={handleNameChange}
+        onChange={(e) => setName(e.target.value)}
       />
       <textarea
-        type="text"
         placeholder="Description"
         className="bg-blue-200 rounded-md text-center inline-block w-full py-3 px-4 h-[10rem]"
         value={description}
-        onChange={handleInputChange}
+        onChange={(e) => setDescription(e.target.value)}
       />
       <select
         className="bg-blue-200 rounded-md text-center inline-block w-full py-3 px-4"
         value={id_team}
-        onChange={handleTeamChange}
+        onChange={(e) => setIdTeam(e.target.value)}
       >
         {teams.map((team) => (
           <option key={team.id_team} value={team.id_team}>
