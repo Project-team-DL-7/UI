@@ -17,6 +17,7 @@ const Dashboard = () => {
   } = useContext(ProjectContext);
 
   if (isProjectsLoading || isTeamLoading || isTaskLoading) return <Loading />;
+  if (!projects || !teams || !tasks) return <Loading />;
 
   const tasksLenght = tasks.length;
   const displayTasks = tasksLenght > 4 ? 4 : tasksLenght;

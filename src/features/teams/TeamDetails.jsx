@@ -6,7 +6,6 @@ import TeamDelete from "./TeamDelete";
 import TeamUpdate from "./TeamUpdate";
 import { ProjectContext } from "../../contexts/ProjectContext";
 import Loading from "../../ui/Loading";
-import TaskPreview from "../tasks/TaskPreview";
 import Button from "../../ui/Button";
 import Modal from "../../ui/Modal";
 import AddTeamMember from "./AddTeamMember";
@@ -44,16 +43,16 @@ const TeamDetails = () => {
         className={"ml-5"}
         onClick={() => setShowModal(true)}
       />
-      <div className="grid grid-cols-5 md:grid-cols-4 gap-2 mt-5 mx-2 h-[90%]">
+      <div className="flex flex-col my-4 gap-8 w-[90%] md:flex-row md:h-[28rem] ml-[5%]">
         {/* tasks */}
-        <div className="col-span-2  border-[1px] border-gray-500 px-2 max-h-[80%] overflow-y-auto">
+        <div className="h-[15rem] border-gray-400 border-[2px] rounded-md shadow-gray-500 shadow-md md:w-[50%] md:h-[100%] overflow-auto">
           <h1 className="text-xl font-bold text-blue-800 text-center mb-3">
             Description
           </h1>
           <p className="font-bold">{team.description}</p>
         </div>
         {/* members */}
-        <div className="col-span-2  border-[1px] border-gray-500 px-2 max-h-[80%] overflow-y-auto">
+        <div className="h-[15rem] border-gray-400 border-[2px] rounded-md shadow-gray-500 shadow-md md:w-[50%] md:h-[100%] overflow-auto">
           <h1 className="text-xl font-bold text-blue-800 text-center mb-3">
             Members
           </h1>

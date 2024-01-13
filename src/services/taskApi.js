@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:8000";
+const API_URL = import.meta.env.VITE_BE_URL;
 
 export async function createTask(task) {
   const response = await fetch(`${API_URL}/task`, {

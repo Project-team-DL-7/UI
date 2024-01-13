@@ -25,8 +25,15 @@ const TaskDetail = () => {
   return (
     <Box>
       <div className="flex justify-between p-3">
-        <h1 className="text-3xl font-bold text-blue-800 self-start ml-[10%]">
-          {task.task_name}
+        <h1 className="text-3xl font-bold text-blue-800 self-start ml-[1%]">
+          {task.task_name.length > 15
+            ? task.task_name.split(" ").map((word, index) => (
+                <span key={index}>
+                  {word}
+                  <br />
+                </span>
+              ))
+            : task.task_name}
         </h1>
         <div className="flex gap-3">
           <TaskUpdate
