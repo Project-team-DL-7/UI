@@ -9,11 +9,15 @@ const DashBoardTask = ({ taskId, data }) => {
     .toLocaleDateString(undefined, options)
     .replace(/\//g, ".");
 
+  const nameLength = data.task_name.length;
+  const truncatedName =
+    nameLength > 10 ? data.task_name.substring(0, 10) + "..." : data.task_name;
+
   return (
     <div className="grid grid-cols-2 w-full mt-3 rounded-lg bg-gray-300 h-[30px] justify-items-center">
       <div className="col-span-2 md:col-span-1 flex justify-center md:justify-start items-center ">
         <Link className="w-full" to={`/tasks/${taskId}`}>
-          <h1 className="text-md font-bold text-blue-800 ">{data.task_name}</h1>
+          <h1 className="text-md font-bold text-blue-800 ">{truncatedName}</h1>
         </Link>
       </div>
       <div className="hidden md:flex items-center">
