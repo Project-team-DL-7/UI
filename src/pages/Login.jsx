@@ -15,7 +15,7 @@ const Login = () => {
   return (
     <div className="w-screen h-screen items-center flex justify-center flex-col">
       <form
-        action="http://localhost:8000/login/password"
+        action={`${import.meta.env.VITE_BE_URL}/login/password`}
         method="post"
         className="flex flex-col items-center gap-5 w-[24rem] h-[16rem] border-blue-400 border-2 rounded-lg"
       >
@@ -49,12 +49,12 @@ const Login = () => {
       </form>
       <div className="flex flex-col items-center gap-2 mt-5">
         <div>
-          <a href="http://localhost:8000/login/federated/google">
+          <a href={`${import.meta.env.VITE_BE_URL}/login/federated/google`}>
             <button>Sign in with Google</button>
           </a>
         </div>
         <div>
-          <a href="http://localhost:8000/login/federated/facebook">
+          <a href={`${import.meta.env.VITE_BE_URL}/login/federated/facebook`}>
             <button>Sign in with Facebook</button>
           </a>
         </div>
