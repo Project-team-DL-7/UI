@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   HiOutlineClipboardDocumentCheck,
   HiOutlineClipboardDocumentList,
@@ -6,8 +6,12 @@ import {
   HiOutlineUserGroup,
 } from "react-icons/hi2";
 import { Link } from "react-router-dom";
+import { MeContext } from "../contexts/MeContext";
+const API_URL = import.meta.env.VITE_BE_URL;
 
 const Navigation = () => {
+  const { refetch } = useContext(MeContext);
+
   return (
     <ul className="flex flex-col items-start gap-5 mt-8 mx-[3rem]">
       <Link to={"/"}>
@@ -34,6 +38,23 @@ const Navigation = () => {
           <li className="text-xl font-bold text-blue-800">Tasks</li>
         </div>
       </Link>
+      <button
+        onClick={async () => {
+          try {
+            await fetch(`${API_URL}/logout`, {
+              method: "POST",
+              credentials: "include",
+              redirect: "manual",
+            });
+            await refetch();
+          } catch (err) {
+            console.error(err);
+          }
+        }}
+        className="bg-blue-600 hover:bg-blue-500 w-full"
+      >
+        Logout
+      </button>
     </ul>
   );
 };
