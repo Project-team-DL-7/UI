@@ -28,3 +28,20 @@ export async function deleteTask(id) {
 
   return response.json();
 }
+
+export async function updateTask({ id_task, id_project, id_user, task_name, description, deadline, status }) {
+  const response = await fetch(`${API_URL}/task`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+    body: JSON.stringify({ id_task, id_project, id_user, task_name, description, deadline, status }),
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to update task");
+  }
+
+  return response.json();
+}

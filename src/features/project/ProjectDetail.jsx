@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import { useContext } from "react";
 import Box from "../../ui/Box";
 import ProjectDelete from "./ProjectDelete";
-import ProjectUpdate from "./ProjectUpdate"; // Import the ProjectUpdate component
+import ProjectUpdate from "./ProjectUpdate";
 import TeamProjectCard from "../teams/TeamProjectCard";
 import TaskProjectCard from "../tasks/TaskProjectCard";
 import { ProjectContext } from "../../contexts/ProjectContext";
@@ -30,7 +30,7 @@ const ProjectDetail = () => {
             originalName={project.name}
             originalDescription={project.description}
           />
-          <ProjectDelete id={id} refetch={refetchProjects} />
+          <ProjectDelete id={id} refetch={refetchProjects}  />
         </div>
       </div>
       {/* Display only one team  */}

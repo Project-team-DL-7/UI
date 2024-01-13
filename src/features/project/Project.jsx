@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-const Project = ({ projectId, projectName, data }) => {
+const Project = ({ projectId, projectName, data, id_team }) => {
   const description = data.description;
   const truncatedDescription =
     description.length > 20

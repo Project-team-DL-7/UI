@@ -46,23 +46,25 @@ const ProjectBox = () => {
         />
       </div>
       <div className="grid grid-cols-2 grid-rows-auto gap-3 mt-3 md:grid-cols-4 pb-4">
-        {filteredProjects.map((project) => (
+        {filteredProjects.map((projects) => (
           <Project
-            projectId={project.id_project}
-            projectName={project.name}
-            data={project}
-            key={project.id_project}
+            projectId={projects.id_project}
+            projectName={projects.name}
+            data={projects}
+            id_team={projects.id_team}
+            key={projects.id_project}
           />
         ))}
       </div>
-      <Modal isVisible={showModal} setIsVisible={setShowModal}>
-        <CreateProjectForm
-          setShowModal={setShowModal}
-          refetch={refetchProjects}
-        />
-      </Modal>
-    </div>
-  );
+        <Modal isVisible={showModal} setIsVisible={setShowModal}>
+          <CreateProjectForm
+            setShowModal={setShowModal}
+            refetch={refetchProjects}
+            id_team={projects.id_team}
+          />
+        </Modal>
+      </div>
+      );
 };
 
-export default ProjectBox;
+      export default ProjectBox;

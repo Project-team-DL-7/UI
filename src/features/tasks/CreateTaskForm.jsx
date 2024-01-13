@@ -4,6 +4,7 @@ import { createTask } from "../../services/taskApi";
 import { useMutation } from "react-query";
 import { ProjectContext } from "../../contexts/ProjectContext";
 import { useToast } from "../../contexts/ToastContext";
+import { MeContext } from "../../contexts/MeContext"; 
 
 const CreateTaskForm = ({ setShowModal, refetch }) => {
   const [taskName, setTaskName] = useState("");
@@ -12,6 +13,7 @@ const CreateTaskForm = ({ setShowModal, refetch }) => {
   const [status, setStatus] = useState("TO DO"); 
   const { showToast } = useToast();
   const { projects } = useContext(ProjectContext);
+  const { id: userId } = useContext(MeContext); 
 
   // Initialize projectId with the first project's ID or an empty string if no projects are available
   const [projectId, setProjectId] = useState(projects.length > 0 ? projects[0].id_project : "");
@@ -42,6 +44,7 @@ const CreateTaskForm = ({ setShowModal, refetch }) => {
       description,
       deadline: new Date(deadline).getTime(),
       id_project: Number(projectId),
+      id_user: userId,
       status, 
     };
     createTaskMutation(taskData);

@@ -1,79 +1,53 @@
 import React, { useState } from "react";
-import { deleteProject } from "../../services/projectApi";
-import { useNavigate } from "react-router-dom";
 import { HiOutlineArchiveBoxXMark } from "react-icons/hi2";
 import { useMutation } from "react-query";
-import Modal from "react-modal";
+import { deleteProject } from "../../services/projectApi";
 import { useToast } from "../../contexts/ToastContext";
-
-Modal.setAppElement("#root");
+import { useNavigate } from "react-router-dom";
+import Modal from "../../ui/Modal";
 
 const ProjectDelete = ({ id, refetch }) => {
-  const navigate = useNavigate();
-  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const { showToast } = useToast();
+  const navigate = useNavigate();
 
-  const { mutate } = useMutation(() => deleteProject(id), {
+  const mutation = useMutation(() => deleteProject(id), {
     onSuccess: () => {
-      navigate("/projects");
       showToast("Project deleted successfully", "success");
+      setShowModal(false);
       refetch();
+      navigate("/projects");
     },
     onError: (error) => {
+      setShowModal(false);
       showToast(`Error: ${error.message}`, "error");
     },
   });
 
   const handleDelete = () => {
-    setModalIsOpen(false);
-    mutate();
+    mutation.mutate();
   };
 
   return (
     <div className="cursor-pointer">
       <HiOutlineArchiveBoxXMark
-        onClick={() => setModalIsOpen(true)}
+        className="text-center rounded-md"
         size={30}
+        onClick={() => setShowModal(true)}
       />
-      <Modal
-        isOpen={modalIsOpen}
-        onRequestClose={() => setModalIsOpen(false)}
-        contentLabel="Delete Confirmation"
-        style={{
-          overlay: {
-            backgroundColor: "rgba(0, 0, 0, 0.75)",
-          },
-          content: {
-            top: "50%",
-            left: "50%",
-            right: "auto",
-            bottom: "auto",
-            marginRight: "-50%",
-            transform: "translate(-50%, -50%)",
-            backgroundColor: "#fff",
-            border: "1px solid #ccc",
-            borderRadius: "4px",
-            padding: "20px",
-            width: "30%",
-            height: "30%",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "space-between",
-          },
-        }}
-      >
-        <div>
+      <Modal isVisible={showModal} setIsVisible={setShowModal}>
+        <div className="mb-4">
           <h2>Confirm Deletion</h2>
           <p>
             Deleting a project will delete all its tasks. Are you sure you want
             to delete this project?
           </p>
         </div>
-        <div>
-          <button onClick={handleDelete} style={{ marginRight: "10px" }}>
+        <div className="flex justify-center space-x-4">
+          <button onClick={handleDelete}>
             Yes, delete it
           </button>
-          <button onClick={() => setModalIsOpen(false)}>No, keep it</button>
+          <button onClick={() => setShowModal(false)}>No, keep it</button>
         </div>
       </Modal>
     </div>
