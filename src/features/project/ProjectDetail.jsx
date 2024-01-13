@@ -30,7 +30,7 @@ const ProjectDetail = () => {
             originalName={project.name}
             originalDescription={project.description}
           />
-          <ProjectDelete id={id} refetch={refetchProjects}  />
+          <ProjectDelete id={id} refetch={refetchProjects} />
         </div>
       </div>
       {/* Display only one team  */}
@@ -46,7 +46,7 @@ const ProjectDetail = () => {
             </p>
           </div>
           <div className="h-[15rem] border-gray-400 border-[2px] rounded-md shadow-gray-500 shadow-md md:w-[50%] md:h-[100%] overflow-auto">
-            <TaskProjectCard />
+            <TaskProjectCard projectId={project.id_project} />
           </div>
         </div>
       </div>

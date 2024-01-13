@@ -11,7 +11,7 @@ import SubTask from "./Subtask";
 const TaskDetail = () => {
   const { id } = useParams();
   const { tasks, refetchTask, isTaskLoading } = useContext(ProjectContext);
-  const { id: userId } = useContext(MeContext);
+  const { id: userId, username } = useContext(MeContext); 
   const subTasks = tasks.filter((task) => task.id_parent_task === Number(id));
 
   if (isTaskLoading) return <Loading />;
@@ -67,6 +67,10 @@ const TaskDetail = () => {
           <p className={`ml-12 font-bold px-2 rounded text-white ${task.status === 'TO DO' ? 'bg-blue-500' : task.status === 'IN PROGRESS' ? 'bg-orange-500' : task.status === 'DONE' ? 'bg-green-500' : 'bg-red-500'}`}>
             {task.status}
           </p>
+        </div>
+        <div className="flex items-center">
+          <p className="text-xl font-bold text-blue-800">Assigned to: </p>
+          <p className="ml-12 font-bold">{task.id_user === userId ? username : ''}</p>
         </div>
       </div>
       <div className="mt-5">

@@ -34,9 +34,6 @@ const SubTask = ({ parentTaskId, projectId, refetch, isTaskLoading }) => {
         setSortOrder((prevSortOrder) => (prevSortOrder === "asc" ? "desc" : "asc"));
     };
 
-    console.log(tasks);
-    console.log(parentTaskId, projectId);
-
     return (
         <div className="border-[2px] border-gray-400 p-2 max-h-[15rem] overflow-y-auto rounded-md my-1">
             <div className="flex w-full justify-between p-4">
