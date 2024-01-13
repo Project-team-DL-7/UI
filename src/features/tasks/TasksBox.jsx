@@ -17,7 +17,8 @@ const TasksBox = () => {
   const filteredTasks = tasks.filter((task) => {
     return (
       task.task_name &&
-      task.task_name.toLowerCase().includes(search.toLowerCase())
+      task.task_name.toLowerCase().includes(search.toLowerCase()) &&
+      task.id_parent_task === null
     );
   });
 
@@ -51,15 +52,18 @@ const TasksBox = () => {
           .filter((project) =>
             filteredTasks.some((task) => task.id_project === project.id_project)
           )
-          .map((project) => (
-            <Task
-              projectId={project.id_project}
-              key={project.id_project}
-              tasks={filteredTasks}
-              refetch={refetchTask}
-              isTaskLoading={isTaskLoading}
-            />
-          ))}
+          .map((project) => {
+            const projectTasks = filteredTasks.filter(task => task.id_project === project.id_project);
+            return (
+              <Task
+                projectId={project.id_project}
+                key={project.id_project}
+                tasks={projectTasks}
+                refetch={refetchTask}
+                isTaskLoading={isTaskLoading}
+              />
+            );
+          })}
       </div>
       <Modal isVisible={showModal} setIsVisible={setShowModal}>
         <CreateTaskForm setShowModal={setShowModal} refetch={refetchTask} />

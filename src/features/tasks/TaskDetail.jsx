@@ -6,11 +6,13 @@ import TaskDelete from "./TaskDelete";
 import TaskUpdate from "./TaskUpdate";
 import { ProjectContext } from "../../contexts/ProjectContext";
 import { MeContext } from "../../contexts/MeContext";
+import SubTask from "./Subtask";
 
 const TaskDetail = () => {
   const { id } = useParams();
   const { tasks, refetchTask, isTaskLoading } = useContext(ProjectContext);
   const { id: userId } = useContext(MeContext);
+  const subTasks = tasks.filter((task) => task.id_parent_task === Number(id));
 
   if (isTaskLoading) return <Loading />;
 
@@ -28,11 +30,11 @@ const TaskDetail = () => {
         <h1 className="text-3xl font-bold text-blue-800 self-start ml-[1%]">
           {task.task_name.length > 15
             ? task.task_name.split(" ").map((word, index) => (
-                <span key={index}>
-                  {word}
-                  <br />
-                </span>
-              ))
+              <span key={index}>
+                {word}
+                <br />
+              </span>
+            ))
             : task.task_name}
         </h1>
         <div className="flex gap-3">
@@ -66,6 +68,11 @@ const TaskDetail = () => {
             {task.status}
           </p>
         </div>
+      </div>
+      <div className="mt-5">
+        {task.id_parent_task == null && (
+          <SubTask parentTaskId={id} projectId={task.id_project} refetch={refetchTask} isTaskLoading={isTaskLoading} />
+        )}
       </div>
     </Box>
   );

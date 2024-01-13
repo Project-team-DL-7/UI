@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { MeContext } from "../../contexts/MeContext";
 import { HiPencilAlt } from "react-icons/hi";
 import { useMutation } from "react-query";
 import { useToast } from "../../contexts/ToastContext";
@@ -13,7 +14,8 @@ const TaskUpdate = ({ id, id_project, id_user, refetch, originalName, originalDe
     const [deadline, setDeadline] = useState(originalDeadline);
     const [status, setStatus] = useState(originalStatus);
     const { showToast } = useToast();
-
+    const { id: userId, username } = useContext(MeContext);
+    const [selectedUser, setSelectedUser] = useState(id_user);
     const mutation = useMutation(updateTask, {
         onSuccess: () => {
             setShowModal(false);
@@ -103,7 +105,7 @@ const TaskUpdate = ({ id, id_project, id_user, refetch, originalName, originalDe
         const taskData = {
             id_task: Number(id),
             id_project,
-            id_user,
+            id_user: selectedUser,
             task_name: taskName,
             description,
             deadline: deadlineDate.getTime(),
@@ -137,6 +139,13 @@ const TaskUpdate = ({ id, id_project, id_user, refetch, originalName, originalDe
                         value={new Date(deadline).toISOString().split('T')[0]}
                         onChange={(e) => setDeadline(new Date(e.target.value).getTime())}
                     />
+                    <select
+                        className="w-full text-center bg-blue-200 rounded-md"
+                        value={selectedUser}
+                        onChange={(e) => setSelectedUser(e.target.value)}
+                    >
+                        <option value={userId}>{username}</option>
+                    </select>
                     <ReactSelect
                         options={options}
                         styles={customStyles}

@@ -18,7 +18,9 @@ const Task = ({ projectId, refetch, isTaskLoading }) => {
   // project name filter
   const project = projects.find((project) => project.id_project === projectId);
   // search filter
-  const projectTasks = tasks.filter((task) => task.id_project === projectId);
+  const projectTasks = tasks.filter((task) => {
+    return task.id_project === projectId && task.id_parent_task === null;
+  });
   const filteredTasks = projectTasks.filter((task) => {
     return task.task_name.toLowerCase().includes(search.toLowerCase());
   });

@@ -13,8 +13,8 @@ const CreateTaskForm = ({ setShowModal, refetch }) => {
   const [status, setStatus] = useState("TO DO");
   const { showToast } = useToast();
   const { projects } = useContext(ProjectContext);
-  const { id: userId } = useContext(MeContext);
-
+  const { id: userId, username } = useContext(MeContext);
+  const [selectedUser, setSelectedUser] = useState(userId);
   // Initialize projectId with the first project's ID or an empty string if no projects are available
   const [projectId, setProjectId] = useState(projects.length > 0 ? projects[0].id_project : "");
 
@@ -66,12 +66,17 @@ const CreateTaskForm = ({ setShowModal, refetch }) => {
       return;
     }
 
+    if (!deadline) {
+      showToast("Deadline cannot be empty", "error");
+      return;
+    }
+
     const taskData = {
       task_name: taskName,
       description,
       deadline: deadlineDate.getTime(),
       id_project: Number(projectId),
-      id_user: userId,
+      id_user: selectedUser,
       status
     };
 
@@ -126,6 +131,13 @@ const CreateTaskForm = ({ setShowModal, refetch }) => {
             {project.name}
           </option>
         ))}
+      </select>
+      <select
+        className="bg-blue-200 rounded-md text-center inline-block w-full py-3 px-4"
+        value={selectedUser}
+        onChange={(event) => handleInputChange(event, setSelectedUser)}
+      >
+        <option value={userId}>{username}</option>
       </select>
       <Button text={"Submit"} type="submit" />
     </form>
