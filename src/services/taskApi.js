@@ -20,6 +20,7 @@ export async function createTask(task) {
 export async function deleteTask(id) {
   const response = await fetch(`${API_URL}/task/${id}`, {
     method: "DELETE",
+    credentials: "include",
   });
 
   if (!response.ok) {

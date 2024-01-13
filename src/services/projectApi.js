@@ -22,6 +22,7 @@ export async function createProject(newProject) {
 export async function deleteProject(id) {
   const res = await fetch(`${API_URL}/project/${id}`, {
     method: "DELETE",
+    credentials: "include",
   });
 
   if (!res.ok) {

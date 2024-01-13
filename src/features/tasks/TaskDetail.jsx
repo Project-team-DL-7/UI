@@ -55,7 +55,9 @@ const TaskDetail = () => {
         </div>
         <div className="flex items-center">
           <p className="text-xl font-bold text-blue-800">Status: </p>
-          <p className="ml-12 font-bold">{task.status}</p>
+          <p className={`ml-12 font-bold px-2 rounded text-white ${task.status === 'TO DO' ? 'bg-blue-500' : task.status === 'IN PROGRESS' ? 'bg-orange-500' : task.status === 'DONE' ? 'bg-green-500' : 'bg-red-500'}`}>
+            {task.status}
+          </p>
         </div>
       </div>
     </Box>

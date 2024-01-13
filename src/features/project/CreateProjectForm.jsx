@@ -31,6 +31,17 @@ const CreateProjectForm = ({ setShowModal, refetch }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+
+    if (!name.trim()) {
+      showToast("Project name cannot be empty", "error");
+      return;
+    }
+
+    if (!description.trim()) {
+      showToast("Description cannot be empty", "error");
+      return;
+    }
+
     const projectData = { name, description, id_team: Number(id_team) };
     createProjectMutation(projectData);
   };

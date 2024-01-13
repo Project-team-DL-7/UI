@@ -27,6 +27,17 @@ const CreateTeam = ({ setShowModal, refetch }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+
+    if (!teamName.trim()) {
+      showToast("Team name cannot be empty", "error");
+      return;
+    }
+
+    if (!description.trim()) {
+      showToast("Description cannot be empty", "error");
+      return;
+    }
+
     createTeamMutation({
       team_name: teamName,
       description: description,

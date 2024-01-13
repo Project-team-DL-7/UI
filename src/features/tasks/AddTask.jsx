@@ -4,13 +4,16 @@ import { createTask } from "../../services/taskApi";
 import { useMutation } from "react-query";
 import { ProjectContext } from "../../contexts/ProjectContext";
 import { useToast } from "../../contexts/ToastContext";
+import { MeContext } from "../../contexts/MeContext";
 
 const AddTask = ({ setShowModal, refetch, projectId }) => {
   const [taskName, setTaskName] = useState("");
   const [description, setDescription] = useState("");
   const [deadline, setDeadline] = useState("");
+  const [status, setStatus] = useState("TO DO");
   const { showToast } = useToast();
   const { projects } = useContext(ProjectContext);
+  const { id: userId } = useContext(MeContext);
 
   const { mutate: createTaskMutation } = useMutation(
     (newTask) => createTask(newTask),
@@ -33,12 +36,42 @@ const AddTask = ({ setShowModal, refetch, projectId }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+
+    if (!taskName.trim()) {
+      showToast("Task name cannot be empty", "error");
+      return;
+    }
+
+    if (!description.trim()) {
+      showToast("Description cannot be empty", "error");
+      return;
+    }
+
+    const deadlineDate = new Date(deadline);
+    const currentDate = new Date();
+
+    const deadlineDay = deadlineDate.getUTCDate();
+    const deadlineMonth = deadlineDate.getUTCMonth();
+    const deadlineYear = deadlineDate.getUTCFullYear();
+
+    const currentDay = currentDate.getUTCDate();
+    const currentMonth = currentDate.getUTCMonth();
+    const currentYear = currentDate.getUTCFullYear();
+
+    if (deadlineYear < currentYear || (deadlineYear === currentYear && deadlineMonth < currentMonth) || (deadlineYear === currentYear && deadlineMonth === currentMonth && deadlineDay <= currentDay)) {
+      showToast("Deadline cannot be today or in the past", "error");
+      return;
+    }
+
     const taskData = {
       task_name: taskName,
       description,
-      deadline: new Date(deadline).getTime(),
+      deadline: deadlineDate.getTime(),
       id_project: Number(projectId),
+      id_user: userId,
+      status,
     };
+
     createTaskMutation(taskData);
   };
 

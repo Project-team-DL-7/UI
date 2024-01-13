@@ -4,6 +4,7 @@ import { useMutation } from "react-query";
 import { useToast } from "../../contexts/ToastContext";
 import Modal from "../../ui/Modal";
 import { updateTask } from "../../services/taskApi";
+import ReactSelect from 'react-select';
 
 const TaskUpdate = ({ id, id_project, id_user, refetch, originalName, originalDescription, originalDeadline, originalStatus }) => {
     const [showModal, setShowModal] = useState(false);
@@ -25,16 +26,88 @@ const TaskUpdate = ({ id, id_project, id_user, refetch, originalName, originalDe
         },
     });
 
+    const options = [
+        { value: 'TO DO', label: 'TO DO', color: 'blue' },
+        { value: 'IN PROGRESS', label: 'IN PROGRESS', color: 'orange' },
+        { value: 'DONE', label: 'DONE', color: 'green' },
+        { value: 'CLOSED', label: 'CLOSED', color: 'red' },
+    ];
+
+    const customStyles = {
+        control: (provided) => ({
+            ...provided,
+            backgroundColor: '#f5f5f5',
+            borderColor: '#dcdcdc',
+            minHeight: '30px',
+            height: '30px',
+            boxShadow: 'none'
+        }),
+
+        valueContainer: (provided) => ({
+            ...provided,
+            height: '30px',
+            padding: '0 6px'
+        }),
+
+        input: (provided) => ({
+            ...provided,
+            margin: '0px',
+        }),
+
+        indicatorsContainer: (provided) => ({
+            ...provided,
+            height: '30px',
+        }),
+
+        option: (provided, { data, isFocused }) => ({
+            ...provided,
+            backgroundColor: isFocused ? data.color : null,
+            color: isFocused ? 'white' : 'black',
+        }),
+
+        singleValue: (provided, { data }) => ({
+            ...provided,
+            color: data.color,
+        }),
+    };
+
     const handleSubmit = (e) => {
         e.preventDefault();
-        const taskData = { 
-            id_task: Number(id), 
-            id_project, 
-            id_user, 
-            task_name: taskName, 
-            description, 
-            deadline: new Date(deadline).getTime(),
-            status 
+
+        if (!taskName.trim()) {
+            showToast("Task name cannot be empty", "error");
+            return;
+        }
+
+        if (!description.trim()) {
+            showToast("Description cannot be empty", "error");
+            return;
+        }
+
+        const deadlineDate = new Date(deadline);
+        const currentDate = new Date();
+
+        const deadlineDay = deadlineDate.getUTCDate();
+        const deadlineMonth = deadlineDate.getUTCMonth();
+        const deadlineYear = deadlineDate.getUTCFullYear();
+
+        const currentDay = currentDate.getUTCDate();
+        const currentMonth = currentDate.getUTCMonth();
+        const currentYear = currentDate.getUTCFullYear();
+
+        if (deadlineYear < currentYear || (deadlineYear === currentYear && deadlineMonth < currentMonth) || (deadlineYear === currentYear && deadlineMonth === currentMonth && deadlineDay <= currentDay)) {
+            showToast("Deadline cannot be today or in the past", "error");
+            return;
+        }
+
+        const taskData = {
+            id_task: Number(id),
+            id_project,
+            id_user,
+            task_name: taskName,
+            description,
+            deadline: deadlineDate.getTime(),
+            status
         };
         mutation.mutate(taskData);
     };
@@ -64,16 +137,12 @@ const TaskUpdate = ({ id, id_project, id_user, refetch, originalName, originalDe
                         value={new Date(deadline).toISOString().split('T')[0]}
                         onChange={(e) => setDeadline(new Date(e.target.value).getTime())}
                     />
-                    <select
-                        className="w-full text-center bg-blue-200 rounded-md"
-                        value={status}
-                        onChange={(e) => setStatus(e.target.value)}
-                    >
-                        <option value="TO DO">TO DO</option>
-                        <option value="IN PROGRESS">IN PROGRESS</option>
-                        <option value="DONE">DONE</option>
-                        <option value="CLOSED">CLOSED</option>
-                    </select>
+                    <ReactSelect
+                        options={options}
+                        styles={customStyles}
+                        value={options.find(option => option.value === status)}
+                        onChange={(option) => setStatus(option.value)}
+                    />
                     <button type="submit" className="bg-blue-500 text-white py-2 px-4 rounded">Update Task</button>
                 </form>
             </Modal>

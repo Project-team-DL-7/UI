@@ -22,6 +22,7 @@ export async function createTeam(newTeam) {
 export async function deleteTeam(id) {
   const res = await fetch(`${API_URL}/team/${id}`, {
     method: "DELETE",
+    credentials: "include",
   });
 
   if (!res.ok) {

@@ -28,6 +28,17 @@ const ProjectUpdate = ({ id, refetch, originalName, originalDescription }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+
+    if (!name.trim()) {
+      showToast("Project name cannot be empty", "error");
+      return;
+    }
+
+    if (!description.trim()) {
+      showToast("Description cannot be empty", "error");
+      return;
+    }
+
     mutation.mutate();
   };
 
