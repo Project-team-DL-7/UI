@@ -3,7 +3,7 @@ import { HiOutlineBars3 } from "react-icons/hi2";
 import { Link } from "react-router-dom";
 import { MeContext } from "../contexts/MeContext";
 
-const API_URL = "http://localhost:8000";
+const API_URL = import.meta.env.VITE_BE_URL;
 
 const Header = ({ setShowMenu, showMenu }) => {
   function handleMenu() {
