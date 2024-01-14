@@ -60,3 +60,36 @@ export async function updateTeam(updatedTeam) {
     throw Error("Failed updating your team");
   }
 }
+
+export async function inviteUserToTeam(id_team, id_user) {
+  console.log('Team ID:', id_team);
+  console.log('User ID:', id_user);
+  try {
+    const res = await fetch(`${API_URL}/team/${id_team}/invite/${id_user}`, {
+      method: "POST",
+      credentials: "include",
+    });
+
+    if (!res.ok) {
+      let error;
+      try {
+        if (res.headers.get('Content-Type').includes('application/json')) {
+          error = await res.json(); // Try to get error message from server
+        } else {
+          error = { message: await res.text() }; // Read response as text if not JSON
+        }
+      } catch {
+        error = { message: res.statusText };
+      }
+      throw new Error(
+        `Request failed with status ${res.status}: ${error.message}`
+      );
+    }
+
+    const result = await res.json();
+    return result;
+  } catch (error) {
+    console.error(error); // Log the error
+    throw Error("Failed inviting user to team");
+  }
+}

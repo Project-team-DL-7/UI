@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import Box from "../../ui/Box";
 import TeamMember from "./TeamMember";
 import { useParams } from "react-router-dom";
@@ -14,6 +14,33 @@ const TeamDetails = () => {
   const { id } = useParams();
   const { teams, refetchTeam, isTeamLoading } = useContext(ProjectContext);
   const [showModal, setShowModal] = useState(false);
+  const [teamMembers, setTeamMembers] = useState([]);
+
+  useEffect(() => {
+    const fetchTeamMembers = async () => {
+      try {
+        const response = await fetch(`http://localhost:8000/user/team/${id}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: 'include',
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          console.log('Response data:', data); // Log the response data
+          setTeamMembers(data);
+        } else {
+          console.error("Error fetching team members:", response.statusText);
+        }
+      } catch (error) {
+        console.error("Error fetching team members:", error);
+      }
+    };
+
+    fetchTeamMembers();
+  }, [id, refetchTeam]);
 
   if (isTeamLoading) return <Loading />;
   if (!teams) return null;
@@ -56,21 +83,13 @@ const TeamDetails = () => {
           <h1 className="text-xl font-bold text-blue-800 text-center mb-3">
             Members
           </h1>
-          <TeamMember />
-          <TeamMember />
-          <TeamMember />
-          <TeamMember />
-          <TeamMember />
-          <TeamMember />
-          <TeamMember />
-          <TeamMember />
-          <TeamMember />
-          <TeamMember />
-          <TeamMember />
+          {teamMembers && teamMembers.map((member) => (
+            <TeamMember key={member.id_user} member={member} />
+          ))}
         </div>
       </div>
       <Modal isVisible={showModal} setIsVisible={setShowModal}>
-        <AddTeamMember />
+        <AddTeamMember teamId={id} />
       </Modal>
     </Box>
   );
