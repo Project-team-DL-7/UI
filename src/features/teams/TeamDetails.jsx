@@ -71,7 +71,7 @@ const TeamDetails = () => {
         </div>
       </div>
       <Modal isVisible={showModal} setIsVisible={setShowModal}>
-        <AddTeamMember />
+        <AddTeamMember id_team={id_team}/>
       </Modal>
     </Box>
   );
