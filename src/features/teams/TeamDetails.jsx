@@ -16,7 +16,7 @@ const TeamDetails = () => {
   const [showModal, setShowModal] = useState(false);
 
   if (isTeamLoading) return <Loading />;
-
+  if (!teams) return null;
   const team = teams.find((team) => team.id_team === Number(id));
 
   return (

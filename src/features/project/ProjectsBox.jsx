@@ -4,12 +4,15 @@ import Project from "./Project";
 import Modal from "../../ui/Modal";
 import CreateProjectForm from "./CreateProjectForm";
 import { ProjectContext } from "../../contexts/ProjectContext";
+import Loading from "../../ui/Loading";
 
 const ProjectBox = () => {
   const [showModal, setShowModal] = useState(false);
-  const { projects, refetchProjects } = useContext(ProjectContext);
+  const { projects, refetchProjects, isProjectsLoading } =
+    useContext(ProjectContext);
   const [search, setSearch] = useState("");
 
+  if (isProjectsLoading) return <Loading />;
   if (!projects) {
     return null;
   }
@@ -56,15 +59,15 @@ const ProjectBox = () => {
           />
         ))}
       </div>
-        <Modal isVisible={showModal} setIsVisible={setShowModal}>
-          <CreateProjectForm
-            setShowModal={setShowModal}
-            refetch={refetchProjects}
-            id_team={projects.id_team}
-          />
-        </Modal>
-      </div>
-      );
+      <Modal isVisible={showModal} setIsVisible={setShowModal}>
+        <CreateProjectForm
+          setShowModal={setShowModal}
+          refetch={refetchProjects}
+          id_team={projects.id_team}
+        />
+      </Modal>
+    </div>
+  );
 };
 
-      export default ProjectBox;
+export default ProjectBox;

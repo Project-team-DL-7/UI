@@ -12,9 +12,13 @@ const TeamsBox = () => {
   const [search, setSearch] = useState("");
 
   if (isTeamLoading) return <Loading />;
+  if (!teams) return null;
 
   const filteredTeams = teams.filter((team) => {
-    return team.team_name && team.team_name.toLowerCase().includes(search.toLowerCase());
+    return (
+      team.team_name &&
+      team.team_name.toLowerCase().includes(search.toLowerCase())
+    );
   });
 
   return (
@@ -48,7 +52,7 @@ const TeamsBox = () => {
         ))}
       </div>
       <Modal isVisible={showModal} setIsVisible={setShowModal}>
-      <CreateTeamForm setShowModal={setShowModal} refetch={refetchTeam} />
+        <CreateTeamForm setShowModal={setShowModal} refetch={refetchTeam} />
       </Modal>
     </div>
   );

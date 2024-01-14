@@ -14,6 +14,7 @@ const ProjectDetail = () => {
     useContext(ProjectContext);
 
   if (isProjectsLoading) return <Loading />;
+  if (!projects) return null;
 
   const project = projects.find((project) => project.id_project === Number(id));
 
