@@ -19,7 +19,7 @@ const TeamDetails = () => {
   useEffect(() => {
     const fetchTeamMembers = async () => {
       try {
-        const response = await fetch(`http://localhost:8000/user/team/${id}`, {
+        const response = await fetch(`http://localhost:8000/team/${id}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -29,7 +29,6 @@ const TeamDetails = () => {
 
         if (response.ok) {
           const data = await response.json();
-          console.log('Response data:', data); // Log the response data
           setTeamMembers(data);
         } else {
           console.error("Error fetching team members:", response.statusText);
@@ -83,8 +82,8 @@ const TeamDetails = () => {
           <h1 className="text-xl font-bold text-blue-800 text-center mb-3">
             Members
           </h1>
-          {teamMembers && teamMembers.map((member) => (
-            <TeamMember key={member.id_user} member={member} />
+          {team && team.members && team.members.map((member) => (
+            <TeamMember key={member.id} member={member} />
           ))}
         </div>
       </div>
