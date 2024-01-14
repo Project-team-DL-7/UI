@@ -13,6 +13,7 @@ const TasksBox = () => {
   const [search, setSearch] = useState("");
 
   if (isTaskLoading) return <Loading />;
+  if (!tasks) return null;
 
   const filteredTasks = tasks.filter((task) => {
     return (
@@ -53,7 +54,9 @@ const TasksBox = () => {
             filteredTasks.some((task) => task.id_project === project.id_project)
           )
           .map((project) => {
-            const projectTasks = filteredTasks.filter(task => task.id_project === project.id_project);
+            const projectTasks = filteredTasks.filter(
+              (task) => task.id_project === project.id_project
+            );
             return (
               <Task
                 projectId={project.id_project}
