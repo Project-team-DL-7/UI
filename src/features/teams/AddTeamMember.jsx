@@ -17,8 +17,8 @@ const AddTeamMember = ({ id_team }) => {
         method: "POST",
         headers: {
           "Content-Type": "application/json", // Set the content type as needed
+          credentials: "include",
         },
-        // You can include a request body if required
         // body: JSON.stringify({ id_team, id }),
       });
 
